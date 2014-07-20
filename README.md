@@ -77,3 +77,4 @@ The following primitives are available:
   * `size` - Get/Set the width/height of a window.
 * Misc
   * `focus` - Focus the window.
+  * `workspace` - Return the workspace the window is active on.  (Maybe be -1 if the window is pinned, or invisible).
