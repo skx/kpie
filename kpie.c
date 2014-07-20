@@ -271,6 +271,14 @@ static int lua_size( lua_State *L )
     return 2;
 }
 
+/**
+ * Focus the window.
+ */
+static int lua_focus(lua_State *L)
+{
+    wnck_window_activate (g_window, 0);
+    return 0;
+}
 
 /**
  * This function is called when a new window is created.
@@ -383,6 +391,11 @@ int main (int argc, char **argv)
      */
     lua_register(L,"xy", lua_xy );
     lua_register(L,"size", lua_size );
+
+    /**
+     * Misc.
+     */
+    lua_register(L,"focus", lua_focus );
 
 
     GMainLoop *loop;

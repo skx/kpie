@@ -75,3 +75,5 @@ The following primitives are available:
 * Movement
   * `xy` - Get/Set the X/Y coordinates of a window.
   * `size` - Get/Set the width/height of a window.
+* Misc
+  * `focus` - Focus the window.
