@@ -118,11 +118,29 @@ static int lua_maximize( lua_State *L)
 }
 
 /**
+ * UnMaximize the window.
+ */
+static int lua_unmaximize( lua_State *L)
+{
+    wnck_window_unmaximize(g_window);
+    return 0;
+}
+
+/**
  * Set the window to be fullscreen.
  */
 static int lua_fullscreen( lua_State *L)
 {
     wnck_window_set_fullscreen(g_window, TRUE );
+    return 0;
+}
+
+/**
+ * Unset the window to be fullscreen.
+ */
+static int lua_unfullscreen( lua_State *L)
+{
+    wnck_window_set_fullscreen(g_window, FALSE );
     return 0;
 }
 
@@ -389,8 +407,10 @@ int main (int argc, char **argv)
      * Max
      */
     lua_register(L, "maximize", lua_maximize);
+    lua_register(L, "unmaximize", lua_unmaximize);
     lua_register(L, "is_maximized", lua_is_maximized);
     lua_register(L, "fullscreen", lua_fullscreen);
+    lua_register(L, "unfullscreen", lua_unfullscreen);
     lua_register(L, "is_fullscreen", lua_is_fullscreen);
 
 
