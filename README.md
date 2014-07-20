@@ -70,4 +70,5 @@ The following primitives are available:
   * `move_to` - Move to the given workspace (1-8).
   * `pin` - Pin on all workspaces.
   * `unpin` - Don't pin on all workspaces.
-
+* Movement
+  * `xy` - Get/Set the X/Y coordinates of a window.
