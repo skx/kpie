@@ -9,10 +9,11 @@ if ( not shown ) then
 end
 
 --
--- Get the title and class of each window.
+-- Get the title, class, and application of each window.
 --
 title = window_title()
 class = window_class()
+app   = window_application()
 
 --
 -- Get the position and size of each window.
@@ -25,7 +26,8 @@ w,h = size()
 -- Write out the config in a way that can be manipulated.
 --
 print( "if ( ( window_title() == \"" .. title .. "\" ) and " )
-print( "     ( window_class() == \"" .. class .. "\" ) ) then"  )
+print( "     ( window_class() == \"" .. class .. "\" ) and"  )
+print( "     ( window_application() == \"" .. app .. "\" ) ) then"  )
 print( "     xy(" .. x .. "," .. y .. " )" )
 print( "     size(" .. w .. "," .. h .. " )" )
 
