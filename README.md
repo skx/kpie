@@ -58,6 +58,8 @@ The following primitives are available:
   * `window_class` - Get the class of the new window.
   * `window_id` - Get the ID of the new window.
   * `window_pid` - Get the PID of the new window.
+  * `screen_height` - Get the size of the screen.
+  * `screen_width` - Get the size of the screen.
 * Depth
   * `above` - Make the window "always on top".
   * `below` - Remove the "always on top" flag.
