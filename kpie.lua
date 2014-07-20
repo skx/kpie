@@ -13,3 +13,12 @@ end
 if ( window_title() == "xlogo" ) then
    pin()
 end
+
+
+--
+-- If you want to debug things you could uncomment this to see
+-- the windows right now.
+--
+
+-- print( "Window Title: " .. window_title() )
+-- print( "\tClass: " .. window_class() )
