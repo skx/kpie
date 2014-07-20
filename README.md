@@ -10,10 +10,14 @@ Overview
 --------
 
 If the file `~/.kpie.lua` exists then it will be parsed every time a new
-window is opened upon your system.
+window is opened upon your system.  If you start `kpie` with a named
+Lua file that will be used instead, for example:
 
-The configuration file is pure-lua with the addition of some window-related
-primitives.  To give you a flavour this is the default configuration file:
+   $ kpie ~/.config/kpie.lua
+
+Regardless of what the filename is the configuration file is pure-lua with
+the addition of some window-related primitives.  To give you a flavour this
+is the default configuration file:
 
 
     --
@@ -32,12 +36,50 @@ primitives.  To give you a flavour this is the default configuration file:
     end
 
 
+Helper
+------
+
+Included within the repository is a configuration file called `dump.lua`,
+this is designed to provide a helpful starting point if you wish to script
+the manipulation of your windows.
+
+Simply run:
+
+   $ ./kpie ./dump.lua
+
+This will output chunks of config which you can edit or save:
+
+    -- Screen width : 1920
+    -- Screen height: 1080
+    if ( ( window_title() == "emacs@shelob.my.flat: README.md ** /home/skx/git/kpie/README.md" ) and
+         ( window_class() == "emacs" ) ) then
+         xy(595,43 )
+         size(658,558 )
+         workspace(1)
+    end
+    if ( ( window_title() == "feeds" ) and
+         ( window_class() == "Pidgin" ) ) then
+         xy(0,33 )
+         size(1920,1023 )
+         workspace(2)
+    end
+    if ( ( window_title() == "Buddy List" ) and
+         ( window_class() == "Pidgin" ) ) then
+         xy(2,33 )
+         size(824,1023 )
+         workspace(2)
+    end
+
+As you can see this has iterated over all existing windows, and shown
+you their current state - this is perfect if you wish to reproduce a
+complex layout interactively.
+
+
 
 Installation
 ------------
 
-Install the dependencies:
-
+Firstly install the dependencies:
 
       sudo apt-get install libwnck-de
       sudo apt-get install liblua5.1-0-dev
