@@ -84,6 +84,25 @@ static int lua_window_pid(lua_State *L)
     return 1;
 }
 
+/**
+ * Get the size of the screen.
+ */
+static int lua_screen_width(lua_State *L)
+{
+    WnckScreen *screen = wnck_window_get_screen(g_window);
+    lua_pushinteger( L, wnck_screen_get_width(screen));
+    return 1;
+}
+
+/**
+ * Get the size of the screen.
+ */
+static int lua_screen_height(lua_State *L)
+{
+    WnckScreen *screen = wnck_window_get_screen(g_window);
+    lua_pushinteger( L, wnck_screen_get_height(screen));
+    return 1;
+}
 
 /**
  * Maximize the window.
@@ -303,6 +322,8 @@ int main (int argc, char **argv)
     lua_register(L, "window_class", lua_window_class);
     lua_register(L, "window_id",    lua_window_id);
     lua_register(L, "window_pid",   lua_window_pid);
+    lua_register(L, "screen_width", lua_screen_width);
+    lua_register(L, "screen_height", lua_screen_height);
 
     /**
      * Max
