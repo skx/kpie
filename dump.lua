@@ -28,7 +28,17 @@ print( "if ( ( window_title() == \"" .. title .. "\" ) and " )
 print( "     ( window_class() == \"" .. class .. "\" ) ) then"  )
 print( "     xy(" .. x .. "," .. y .. " )" )
 print( "     size(" .. w .. "," .. h .. " )" )
-print( "     move_to(" .. workspace() .. ")" )
--- todo: if maximized .. end
--- todo: if fullscreen .. end
+
+if ( workspace() >= 0 ) then
+   print( "     workspace(" .. workspace() .. ")" )
+end
+
+if ( is_maximized() ) then
+   print( "     maximize()" );
+end
+
+if ( is_fullscreen() ) then
+   print( "     fullscreen()" );
+end
+
 print("end" )
