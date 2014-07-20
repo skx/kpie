@@ -114,3 +114,9 @@ The following primitives are available:
 * Misc
   * `focus` - Focus the window.
   * `workspace` - Get/set the workspace the window is active on.  (Return value will be -1 if the window is pinned, or invisible).
+
+
+Some of these primitives are [documented in the sample-scripts](samples/).
+
+Steve
+--
