@@ -1,3 +1,13 @@
+--
+-- Show some information just the once.
+--
+if ( not shown ) then
+   shown = true
+   print( "Screen width : " .. screen_width() )
+   print( "Screen height: " .. screen_height() )
+end
+
+
 
 --
 -- If Xine is launched it should be "always on top"
@@ -19,6 +29,7 @@ end
 -- If you want to debug things you could uncomment this to see
 -- the windows right now.
 --
-
+--
 -- print( "Window Title: " .. window_title() )
 -- print( "\tClass: " .. window_class() )
+
