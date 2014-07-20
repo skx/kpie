@@ -51,22 +51,16 @@ This will output chunks of config which you can edit or save:
 
     -- Screen width : 1920
     -- Screen height: 1080
-    if ( ( window_title() == "emacs@shelob.my.flat: README.md ** /home/skx/git/kpie/README.md" ) and
-         ( window_class() == "emacs" ) ) then
-         xy(595,43 )
-         size(658,558 )
-         workspace(1)
-    end
     if ( ( window_title() == "feeds" ) and
          ( window_class() == "Pidgin" ) ) then
-         xy(0,33 )
-         size(1920,1023 )
-         workspace(2)
+            xy(0,0)
+            size(1438,1023 )
+            workspace(2)
     end
     if ( ( window_title() == "Buddy List" ) and
          ( window_class() == "Pidgin" ) ) then
-         xy(2,33 )
-         size(824,1023 )
+         xy(1438,0 )
+         size(482,1023 )
          workspace(2)
     end
 
