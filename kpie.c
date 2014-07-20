@@ -207,14 +207,14 @@ static int lua_unpin( lua_State *L)
 }
 
 /**
- * Get the X/Y coords of the window.
+ * Get/Set the X/Y coords of the window.
  */
 static int lua_xy( lua_State *L )
 {
     int top = lua_gettop(L);
 
     /**
-     * Set the values.
+     * Set the values?
      */
     if ( top > 0 )
     {
@@ -239,6 +239,37 @@ static int lua_xy( lua_State *L )
     return 2;
 }
 
+/**
+ * Get/Set the width/height of the window.
+ */
+static int lua_size( lua_State *L )
+{
+    int top = lua_gettop(L);
+
+    /**
+     * Set the values?
+     */
+    if ( top > 0 )
+    {
+        int h = lua_tonumber(L,1);
+        int w = lua_tonumber(L,2);
+
+        wnck_window_set_geometry(g_window,
+                                 WNCK_WINDOW_GRAVITY_CURRENT,
+                                 WNCK_WINDOW_CHANGE_WIDTH + WNCK_WINDOW_CHANGE_HEIGHT,
+				-1,-1,h,w);
+
+    }
+
+    int x;
+    int y;
+    int width;
+    int height;
+    wnck_window_get_geometry(g_window, &x, &y, &width, &height );
+    lua_pushinteger(L, width );
+    lua_pushinteger(L, height );
+    return 2;
+}
 
 
 /**
@@ -351,6 +382,7 @@ int main (int argc, char **argv)
      * Size/Position.
      */
     lua_register(L,"xy", lua_xy );
+    lua_register(L,"size", lua_size );
 
 
     GMainLoop *loop;

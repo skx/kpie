@@ -74,3 +74,4 @@ The following primitives are available:
   * `unpin` - Don't pin on all workspaces.
 * Movement
   * `xy` - Get/Set the X/Y coordinates of a window.
+  * `size` - Get/Set the width/height of a window.
