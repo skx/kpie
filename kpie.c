@@ -26,6 +26,10 @@ WnckWindow *g_window;
 lua_State* L;
 
 
+/**
+ * The lua configuration file we parse/use.
+ */
+char g_config[1024]={'\0'};
 
 
 
@@ -281,6 +285,19 @@ static int lua_focus(lua_State *L)
 }
 
 /**
+ * Get the workspace the window is on.
+ */
+static int lua_workspace(lua_State *L)
+{
+    WnckWorkspace *w =  wnck_window_get_workspace( g_window );
+    if ( w == NULL )
+        lua_pushinteger(L, -1);
+    else
+        lua_pushinteger(L, wnck_workspace_get_number( w ) );
+    return 1;
+}
+
+/**
  * This function is called when a new window is created.
  *
  * It has two jobs:
@@ -303,20 +320,13 @@ on_window_opened (WnckScreen *screen,
     g_window = window;
 
     /**
-     * See if the user has ~/.kpie.lua present.
+     * See if the users lua-file is present.
      */
-    char buf[1024] = { '\0' };
-
-    if ( getenv( "HOME" ) == NULL )
-        return;
-
     struct stat sb;
-    snprintf( buf, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
-
-    if(stat(buf,&sb) < 0)
+    if(stat(g_config,&sb) < 0)
         return;
 
-    int error = luaL_dofile(L, buf );
+    int error = luaL_dofile(L, g_config );
 
     if(error)
     {
@@ -396,6 +406,19 @@ int main (int argc, char **argv)
      * Misc.
      */
     lua_register(L,"focus", lua_focus );
+    lua_register(L,"workspace", lua_workspace );
+
+    /**
+     * Setup our default configuration file.
+     */
+    if ( getenv( "HOME" ) != NULL )
+        snprintf( g_config, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
+
+    /**
+     * If specified use a different one.
+     */
+    if ( argc > 1 )
+        snprintf( g_config, 1000, argv[1] );
 
 
     GMainLoop *loop;
