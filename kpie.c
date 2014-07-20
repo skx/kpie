@@ -43,6 +43,19 @@ static int lua_window_title(lua_State *L)
 }
 
 
+
+/**
+ * Return the window application
+ */
+static int lua_window_application(lua_State *L)
+{
+    WnckApplication *a = wnck_window_get_application(g_window);
+
+    lua_pushstring( L, wnck_application_get_name(a) );
+    return 1;
+}
+
+
 /**
  * Return the window class.
  */
@@ -397,6 +410,7 @@ int main (int argc, char **argv)
      * Information.
      */
     lua_register(L, "window_title", lua_window_title);
+    lua_register(L, "window_application", lua_window_application);
     lua_register(L, "window_class", lua_window_class);
     lua_register(L, "window_id",    lua_window_id);
     lua_register(L, "window_pid",   lua_window_pid);
