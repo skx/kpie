@@ -69,7 +69,6 @@ The following primitives are available:
   * `is_maximized` - Is the window maximized?
   * `is_fullscreen` - Is the window fullscreen?
 * Workspace
-  * `move_to` - Move to the given workspace (1-8).
   * `pin` - Pin on all workspaces.
   * `unpin` - Don't pin on all workspaces.
 * Movement
@@ -77,4 +76,4 @@ The following primitives are available:
   * `size` - Get/Set the width/height of a window.
 * Misc
   * `focus` - Focus the window.
-  * `workspace` - Return the workspace the window is active on.  (Maybe be -1 if the window is pinned, or invisible).
+  * `workspace` - Get/set the workspace the window is active on.  (Return value will be -1 if the window is pinned, or invisible).

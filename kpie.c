@@ -150,27 +150,6 @@ static int lua_is_fullscreen( lua_State *L)
     return 1;
 }
 
-/**
- * Move to the given workspace.
- */
-static int lua_move_to( lua_State *L)
-{
-    int number = luaL_checknumber(L, 1);
-
-    WnckScreen *screen;
-    WnckWorkspace *workspace;
-
-    screen = wnck_window_get_screen(g_window);
-    workspace = wnck_screen_get_workspace(screen, number-1);
-
-    if (!workspace) {
-        g_warning("Workspace number %d does not exist!", number);
-    }
-    wnck_window_move_to_workspace(g_window, workspace);
-
-    return 0;
-}
-
 
 /**
  * Set the window to be above all windows.
@@ -285,15 +264,47 @@ static int lua_focus(lua_State *L)
 }
 
 /**
- * Get the workspace the window is on.
+ * Get/set the workspace the window is on.
  */
 static int lua_workspace(lua_State *L)
 {
+
+    int top = lua_gettop(L);
+
+    /**
+     * Set the value?
+     */
+    if ( top > 0 )
+    {
+        int number = luaL_checknumber(L, 1);
+
+        if (number<0 || number>9) {
+            g_warning("Workspace number out of bounds: %d", number);
+        }
+        else
+        {
+            WnckScreen *screen;
+            WnckWorkspace *workspace;
+
+            screen = wnck_window_get_screen(g_window);
+            workspace = wnck_screen_get_workspace(screen, number-1);
+
+            if (workspace)
+                wnck_window_move_to_workspace(g_window, workspace);
+            else
+                g_warning("Workspace number %d does not exist!", number);
+        }
+        return 0;
+    }
+
+    /**
+     * Get the value.
+     */
     WnckWorkspace *w =  wnck_window_get_workspace( g_window );
     if ( w == NULL )
         lua_pushinteger(L, -1);
     else
-        lua_pushinteger(L, wnck_workspace_get_number( w ) );
+        lua_pushinteger(L, wnck_workspace_get_number( w ) + 1 );
     return 1;
 }
 
@@ -382,10 +393,6 @@ int main (int argc, char **argv)
     lua_register(L, "fullscreen", lua_fullscreen);
     lua_register(L, "is_fullscreen", lua_is_fullscreen);
 
-    /**
-     * Workspaces
-     */
-    lua_register(L, "move_to", lua_move_to);
 
     /**
      * On top / below all
