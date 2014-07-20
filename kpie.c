@@ -155,7 +155,7 @@ static int lua_is_fullscreen( lua_State *L)
  */
 static int lua_move_to( lua_State *L)
 {
-    int number = lua_tonumber(L, 1);
+    int number = luaL_checknumber(L, 1);
 
     WnckScreen *screen;
     WnckWorkspace *workspace;
@@ -222,8 +222,8 @@ static int lua_xy( lua_State *L )
      */
     if ( top > 0 )
     {
-        int newx = lua_tonumber(L,1);
-        int newy = lua_tonumber(L,2);
+        int newx = luaL_checknumber(L,1);
+        int newy = luaL_checknumber(L,2);
 
         wnck_window_set_geometry(g_window,
                                  WNCK_WINDOW_GRAVITY_CURRENT,
@@ -255,8 +255,8 @@ static int lua_size( lua_State *L )
      */
     if ( top > 0 )
     {
-        int h = lua_tonumber(L,1);
-        int w = lua_tonumber(L,2);
+        int h = luaL_checknumber(L,1);
+        int w = luaL_checknumber(L,2);
 
         wnck_window_set_geometry(g_window,
                                  WNCK_WINDOW_GRAVITY_CURRENT,
