@@ -688,29 +688,60 @@ int main (int argc, char **argv)
          */
         wnck_screen_force_update (screen);
 
-        GList *window_l;
-        for (window_l = wnck_screen_get_windows (screen); window_l != NULL; window_l = window_l->next)
+
+        /**
+         * Count each screen.
+         */
+        int i;
+        int count = gdk_display_get_n_screens(gdk_display_get_default());
+
+        /**
+         * For each screen ..
+         */
+        for (i=0;i<count;i++)
         {
-            /**
-             * Update the global pointer to the current window.
-             */
-            WnckWindow *w = WNCK_WINDOW (window_l->data);
+            WnckScreen *screen=wnck_screen_get(i);
 
             /**
-             * Invoke our callback.
+             * Get all windows.
              */
-            on_window_opened( screen, w, NULL );
+            GList *window_l;
+            for (window_l = wnck_screen_get_windows (screen); window_l != NULL; window_l = window_l->next)
+            {
+                /**
+                 * Update the global pointer to the current window.
+                 */
+                WnckWindow *w = WNCK_WINDOW (window_l->data);
+
+                /**
+                 * Invoke our callback.
+                 */
+                on_window_opened( screen, w, NULL );
+            }
         }
 
     }
     else
     {
+        /**
+         * Count the screens on the system.
+         */
+        int i;
+        int count = gdk_display_get_n_screens(gdk_display_get_default());
 
         /**
-         * Ensure our callback is invoked when new windows are opened.
+         * For each screen.
          */
-        g_signal_connect (screen, "window-opened",
-                          G_CALLBACK (on_window_opened), NULL);
+        for (i=0;i<count;i++)
+        {
+
+            /**
+             * Ensure our callback is invoked when new windows are opened.
+             */
+            WnckScreen *screen=wnck_screen_get(i);
+            g_signal_connect (screen, "window-opened",
+                              G_CALLBACK (on_window_opened), NULL);
+        }
 
         /**
          * Launch - NOTE: Never returns.
