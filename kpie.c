@@ -37,6 +37,9 @@
 #include "lauxlib.h"
 
 
+#ifndef UNUSED
+#  define UNUSED(x) (void)(x)
+#endif
 
 
 
@@ -70,6 +73,7 @@ char g_config_file[1024]={'\0'};
  * Are we running with --debug ?
  */
 int g_debug = FALSE;
+
 
 
 /**
@@ -166,6 +170,7 @@ static int lua_screen_height(lua_State *L)
  */
 static int lua_maximize( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_maximize(g_window);
     return 0;
 }
@@ -176,6 +181,7 @@ static int lua_maximize( lua_State *L)
  */
 static int lua_unmaximize( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_unmaximize(g_window);
     return 0;
 }
@@ -186,6 +192,7 @@ static int lua_unmaximize( lua_State *L)
  */
 static int lua_fullscreen( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_set_fullscreen(g_window, TRUE );
     return 0;
 }
@@ -196,6 +203,7 @@ static int lua_fullscreen( lua_State *L)
  */
 static int lua_unfullscreen( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_set_fullscreen(g_window, FALSE );
     return 0;
 }
@@ -232,6 +240,7 @@ static int lua_is_fullscreen( lua_State *L)
  */
 static int lua_above( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_make_above (g_window);
     return 0;
 }
@@ -242,6 +251,7 @@ static int lua_above( lua_State *L)
  */
 static int lua_below( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_unmake_above (g_window);
     return 0;
 }
@@ -252,6 +262,7 @@ static int lua_below( lua_State *L)
  */
 static int lua_pin( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_pin (g_window);
     return 0;
 }
@@ -262,6 +273,7 @@ static int lua_pin( lua_State *L)
  */
 static int lua_unpin( lua_State *L)
 {
+    UNUSED(L);
     wnck_window_unpin (g_window);
     return 0;
 }
@@ -339,6 +351,7 @@ static int lua_size( lua_State *L )
  */
 static int lua_focus(lua_State *L)
 {
+    UNUSED(L);
     wnck_window_activate (g_window, 0);
     return 0;
 }
@@ -406,6 +419,7 @@ static int lua_workspace(lua_State *L)
  */
 static int lua_kill( lua_State *L )
 {
+    UNUSED(L);
     wnck_window_close(g_window, 0);
     return( 0 );
 }
@@ -451,6 +465,10 @@ on_window_opened (WnckScreen *screen,
                   WnckWindow *window,
                   gpointer    data)
 {
+
+    UNUSED(screen);
+    UNUSED(data);
+
     /**
      * Update the global "current window" to point to the current
      * window which has just been created.
