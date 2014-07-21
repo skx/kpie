@@ -520,7 +520,7 @@ static int lua_workspaces( lua_State *L )
  *
  *   1. Save the window pointer to our global g_window variable.
  *
- *   2. Invoke the lua file ~/.kpie.lua.
+ *   2. Invoke the lua file ~/.kpie.lua - or whatever file we've been configured with.
  *
  */
 static void
@@ -704,18 +704,6 @@ int main (int argc, char **argv)
 
 
     /**
-     * Set the value DEBUG to be true/false depending on how we were
-     * invoked.
-     */
-    if ( g_debug )
-        lua_pushboolean(L, 1 );
-    else
-        lua_pushboolean(L, 0 );
-    lua_setglobal(L, "DEBUG" );
-
-
-
-    /**
      * If a configuration file was specified use a different one.
      */
     int index;
@@ -730,6 +718,26 @@ int main (int argc, char **argv)
 
     if ( g_debug && g_single )
         printf( "Single run\n" );
+
+
+    /**
+     * Set the value DEBUG to be true/false depending on how we were
+     * invoked.
+     */
+    if ( g_debug )
+        lua_pushboolean(L, 1 );
+    else
+        lua_pushboolean(L, 0 );
+    lua_setglobal(L, "DEBUG" );
+
+
+    /**
+     * Set the global variables VERSION and CONFIG.
+     */
+    lua_pushstring(L, g_config_file );
+    lua_setglobal(L, "CONFIG" );
+    lua_pushnumber(L, VERSION );
+    lua_setglobal(L, "VERSION" );
 
 
     /**

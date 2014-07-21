@@ -6,6 +6,8 @@
 --
 if ( DEBUG ) then
 
+   print( "KPie version " .. VERSION .. " running with config-file " .. CONFIG )
+
    if ( not shown ) then
       shown = true
       print( "Screen width : " .. screen_width() )
