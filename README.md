@@ -10,6 +10,7 @@ Usage is:
 
 Options are currently limited to:
 
+    --config   - Explicitly specify a configuration file.
     --debug    - Show debugging information.
     --single   - Process each window once, then exit.
     --version  - Show the version number.
