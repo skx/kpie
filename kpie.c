@@ -27,6 +27,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <getopt.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 #include <libwnck/libwnck.h>
@@ -65,6 +66,10 @@ lua_State* L;
  */
 char g_config_file[1024]={'\0'};
 
+/**
+ * Are we running with --debug ?
+ */
+int g_debug = FALSE;
 
 
 /**
@@ -515,11 +520,74 @@ int main (int argc, char **argv)
     if ( getenv( "HOME" ) != NULL )
         snprintf( g_config_file, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
 
+
     /**
-     * If specified use a different one.
+     * A flag to control if we just run once.
      */
-    if ( argc > 1 )
-        snprintf( g_config_file, 1000, argv[1] );
+    int g_single = 0;
+
+
+    /**
+     * Parse our options.
+     */
+    while (1)
+    {
+        static struct option long_options[] =
+            {
+                {"debug",  no_argument, 0, 'd'},
+                {"single", no_argument, 0, 's'},
+                {"config", required_argument, 0, 'c'},
+                {"version", no_argument, 0, 'v'},
+                {0, 0, 0, 0}
+            };
+
+        char c;
+
+        /* getopt_long stores the option index here. */
+        int option_index = 0;
+
+        c = getopt_long(argc, argv, "dsc:v", long_options, &option_index);
+
+        /* Detect the end of the options. */
+        if (c == -1)
+            break;
+
+        switch (c)
+        {
+        case 'd':
+            g_debug = TRUE;
+            break;
+        case 'c':
+            snprintf( g_config_file, 1000, "%s", optarg );
+            break;
+        case 's':
+            g_single = TRUE;
+            break;
+        case 'v':
+            printf( "kpie - 0.1\n" );
+            exit(0);
+            break;
+        case '?':
+            /* getopt_long already printed an error message. */
+            exit(1);
+            break;
+        }
+    }
+
+
+    /**
+     * If a configuration file was specified use a different one.
+     */
+    int index;
+    for (index = optind; index < argc; index++)
+        snprintf( g_config_file, 1000, argv[index] );
+
+
+    if ( g_debug )
+        printf( "Loading configuration file: %s\n", g_config_file );
+
+    if ( g_debug && g_single )
+        printf( "Single run\n" );
 
 
     /**
@@ -532,18 +600,50 @@ int main (int argc, char **argv)
 
 
     /**
-     * Ensure our callback is invoked when new windows are opened.
+     * If we're running a single run then just run the loop
+     * once.
      */
-    g_signal_connect (screen, "window-opened",
-                      G_CALLBACK (on_window_opened), NULL);
+    if ( g_single )
+    {
+
+        /**
+         * Force a sync.
+         */
+        wnck_screen_force_update (screen);
+
+        GList *window_l;
+        for (window_l = wnck_screen_get_windows (screen); window_l != NULL; window_l = window_l->next)
+        {
+            /**
+             * Update the global pointer to the current window.
+             */
+            WnckWindow *w = WNCK_WINDOW (window_l->data);
+
+            /**
+             * Invoke our callback.
+             */
+            on_window_opened( screen, w, NULL );
+        }
+
+    }
+    else
+    {
+
+        /**
+         * Ensure our callback is invoked when new windows are opened.
+         */
+        g_signal_connect (screen, "window-opened",
+                          G_CALLBACK (on_window_opened), NULL);
+
+        /**
+         * Launch - NOTE: Never returns.
+         */
+        g_main_loop_run (loop);
+    }
+
 
     /**
-     * Launch - NOTE: Never returns.
-     */
-    g_main_loop_run (loop);
-
-    /**
-     * Never reached.
+     * Never reached unless --single was used.
      */
     g_main_loop_unref (loop);
     lua_close(L);
