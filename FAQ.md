@@ -1,4 +1,14 @@
 
+Why the name KPie?
+------------------
+
+Based on the obvious simularity to devilspie I wanted to call
+this tool cherrypie, which is my favourite kind of pie.
+
+The name seemed a little dodgy though so I chose kpie, via the
+Finnish word "kirsi" meaning "cherry".
+
+
 How can I include other files?
 ------------------------------
 
@@ -6,7 +16,7 @@ You can include other Lua files by use of the `dofile` primitive:
 
      dofile( "test.lua" )
 
-However this doesn't allow you to test for a files existance, or handle
+However this does not allow you to test for a files existance, or handle
 cases such as "include ~/.config/*.lua" - for that see the next question.
 
 
@@ -14,10 +24,8 @@ cases such as "include ~/.config/*.lua" - for that see the next question.
 How can I handle wildcards?
 ---------------------------
 
-KPie contains a `readdir` primitive, which will allow you to scan a
-directory looking for files.
-
-This could be used like so:
+kpie contains a `readdir` primitive, which will allow you to scan a
+directory looking for files.  This could be used like so:
 
 
     --
