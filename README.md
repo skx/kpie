@@ -144,7 +144,7 @@ The following primitives are available:
   * `kill` - Close the window, forcibly.
   * `workspace` - Get/set the workspace the window is active on.
     * The return value may be -1 if the window is pinned, or invisible.
-
+  * `workspaces` - Count the number of workspaces.
 
 Some of these primitives are [documented in the sample-scripts](samples/).
 

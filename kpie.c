@@ -359,7 +359,18 @@ static int lua_workspace(lua_State *L)
     {
         int number = luaL_checknumber(L, 1);
 
-        if (number<0 || number>9) {
+
+        /**
+         * Count the workspaces.
+         */
+        WnckScreen *screen  = wnck_window_get_screen(g_window);
+        int count = 0;
+        GList *ws_l;
+        for (ws_l = wnck_screen_get_workspaces (screen); ws_l != NULL; ws_l = ws_l->next)
+            count += 1;
+
+
+        if (number<0 || number>count) {
             g_warning("Workspace number out of bounds: %d", number);
         }
         else
@@ -391,7 +402,7 @@ static int lua_workspace(lua_State *L)
 
 
 /**
- *
+ * Kill the current window.
  */
 static int lua_kill( lua_State *L )
 {
@@ -399,6 +410,30 @@ static int lua_kill( lua_State *L )
     return( 0 );
 }
 
+/**
+ * Count the workspaces.
+ */
+static int lua_workspaces( lua_State *L )
+{
+    /**
+     * Get the screen, and from that the list.
+     */
+    WnckScreen *screen  = wnck_window_get_screen(g_window);
+
+    /**
+     * Iterate over the workspaces.
+     */
+    int count = 0;
+
+    GList *ws_l;
+    for (ws_l = wnck_screen_get_workspaces (screen); ws_l != NULL; ws_l = ws_l->next)
+    {
+        count += 1;
+    }
+
+    lua_pushinteger(L, count );
+    return 1;
+}
 
 
 /**
@@ -512,7 +547,7 @@ int main (int argc, char **argv)
     lua_register(L,"focus", lua_focus );
     lua_register(L,"workspace", lua_workspace );
     lua_register(L,"kill", lua_kill );
-
+    lua_register(L,"workspaces", lua_workspaces );
 
     /**
      * Setup our default configuration file.
