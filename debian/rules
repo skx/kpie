@@ -50,7 +50,7 @@ binary-indep: build install
 	dh_installdebconf
 	dh_installdocs
 	dh_installchangelogs
-	dh_installexamples kpie.lua dump.lua samples/*.lua
+	dh_installexamples kpie.lua samples/*.lua
 	dh_installinit
 	dh_compress
 	dh_fixperms
