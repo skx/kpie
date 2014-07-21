@@ -4,6 +4,11 @@
 -- Here we cope with mplayer, totem, and xine.
 --
 --
+--
+-- Usage:
+--
+--    kpie [--single] ./samples/media.lua
+--
 
 
 --

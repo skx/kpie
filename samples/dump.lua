@@ -1,3 +1,15 @@
+--
+-- Dump all current windows, along with their sizes and positions.
+--
+--
+--
+-- Usage:
+--
+--    kpie [--single] ./samples.dump.lua
+--
+
+
+
 
 --
 -- Show some information just the once.

@@ -1,7 +1,7 @@
 --
 -- This is my personal configuration for Pidgin.
 --
--- The rough layout is:
+-- The rough layout is a pair of windows looking like this, on workspace 2:
 --
 --     ---------------------------------------
 --     | Chat Window           |  Buddy List |
@@ -12,6 +12,13 @@
 -- buddy-list occupying 1/5th of the screen estate.
 --
 --
+--
+-- Usage:
+--
+--    kpie [--single] ./samples/pidgin.lua
+--
+
+
 if ( window_class() == "Pidgin" ) then
 
    -- The width/height of the screen.
