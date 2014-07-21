@@ -1,1 +1,2 @@
-kpie   usr/bin/
+kpie                   usr/bin/
+debian/kpie.desktop    etc/xdg/autostart/

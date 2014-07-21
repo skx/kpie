@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=KPie
+Exec=/usr/bin/kpie
+X-GNOME-AutoRestart=true
+OnlyShowIn=GNOME;Unity;
