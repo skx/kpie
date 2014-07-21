@@ -65,9 +65,9 @@ lua_State* L;
 
 
 /**
- * The lua configuration file we parse/use.
+ * The Lua configuration file we parse/use.
  */
-char g_config_file[1024]={'\0'};
+gchar *g_config_file;
 
 /**
  * Are we running with --debug ?
@@ -629,11 +629,12 @@ int main (int argc, char **argv)
     lua_register(L,"kill", lua_kill );
     lua_register(L,"workspaces", lua_workspaces );
 
+
     /**
      * Setup our default configuration file.
      */
     if ( getenv( "HOME" ) != NULL )
-        snprintf( g_config_file, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
+        g_config_file = g_strdup_printf( "%s/.kpie.lua", getenv( "HOME" ) );
 
 
     /**
@@ -673,7 +674,8 @@ int main (int argc, char **argv)
             g_debug = TRUE;
             break;
         case 'c':
-            snprintf( g_config_file, 1000, "%s", optarg );
+            g_free( g_config_file );
+            g_config_file = g_strdup( optarg );
             break;
         case 's':
             g_single = TRUE;
@@ -711,8 +713,10 @@ int main (int argc, char **argv)
      */
     int index;
     for (index = optind; index < argc; index++)
-        snprintf( g_config_file, 1000, "%s", argv[index] );
-
+    {
+        g_free( g_config_file );
+        g_config_file = g_strdup( argv[index] );
+    }
 
     if ( g_debug )
         printf( "Loading configuration file: %s\n", g_config_file );
@@ -809,6 +813,8 @@ int main (int argc, char **argv)
      */
     g_main_loop_unref (loop);
     lua_close(L);
+
+    g_free(g_config_file);
 
     return 0;
 }
