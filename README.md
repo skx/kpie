@@ -102,7 +102,7 @@ Installation
 
 Firstly install the dependencies:
 
-      sudo apt-get install libwnck-de
+      sudo apt-get install libwnck-dev
       sudo apt-get install liblua5.1-0-dev
 
 Then build via:
