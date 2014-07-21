@@ -106,7 +106,9 @@ The following primitives are available:
   * `window_application` - Get the application which created the window.
   * `window_class` - Get the class of the new window.
   * `window_id` - Get the ID of the new window.
+     * This may be empty.
   * `window_pid` - Get the PID of the new window.
+     * This may be zero on error.
   * `screen_height` - Get the size of the screen.
   * `screen_width` - Get the size of the screen.
 * Depth
@@ -125,7 +127,8 @@ The following primitives are available:
   * `size` - Get/Set the width/height of a window.
 * Misc
   * `focus` - Focus the window.
-  * `workspace` - Get/set the workspace the window is active on.  (Return value will be -1 if the window is pinned, or invisible).
+  * `workspace` - Get/set the workspace the window is active on.
+    * The return value may be -1 if the window is pinned, or invisible.
 
 
 Some of these primitives are [documented in the sample-scripts](samples/).
