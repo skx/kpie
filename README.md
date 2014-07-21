@@ -155,13 +155,16 @@ The following primitives are available:
   * `xy` - Get/Set the X/Y coordinates of a window.
   * `size` - Get/Set the width/height of a window.
 * Misc
-  * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
     * This can be used to control whether you output debugging information.
   * `focus` - Focus the window.
   * `kill` - Close the window, forcibly.
   * `workspace` - Get/set the workspace the window is active on.
     * The return value may be -1 if the window is pinned, or invisible.
   * `workspaces` - Count the number of workspaces.
+* Variables
+  * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
+  * `CONFIG` will be defined as the path to the configuration file loaded.
+  * `VERSION` will be an integer containing the `kpie` release.
 
 Some of these primitives are [documented in the sample-scripts](samples/).
 
