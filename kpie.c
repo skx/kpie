@@ -386,6 +386,17 @@ static int lua_workspace(lua_State *L)
 
 
 /**
+ *
+ */
+static int lua_kill( lua_State *L )
+{
+    wnck_window_close(g_window, 0);
+    return( 0 );
+}
+
+
+
+/**
  * This function is called when a new window is created.
  *
  * It has two jobs:
@@ -495,6 +506,7 @@ int main (int argc, char **argv)
      */
     lua_register(L,"focus", lua_focus );
     lua_register(L,"workspace", lua_workspace );
+    lua_register(L,"kill", lua_kill );
 
 
     /**
