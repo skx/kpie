@@ -19,17 +19,22 @@ Options are currently limited to:
 Overview
 --------
 
-If the file `~/.kpie.lua` exists then it will be parsed and executed
-every time a new window is opened upon your system.
+A single Lua configuration file will be parsed and executed for every
+window on your system, including invisible windows, and windows in different
+workspaces/virtual-desktops.
 
-If you start `kpie` with a named Lua file that will be used instead, for
-example:
+Unless you're running `kpie --single` then the configuration file
+will be invoked for each window that is opened in the future, until
+you terminate `kpie`.
+
+By default `kpie` looks for `~/.kpie.lua`, but you may choose another
+file when you start `kpie` via:
 
     $ kpie ~/.config/kpie.lua
 
-Regardless of which file is used, the configuration file is Lua with
-the addition of some window-related primitives.  To give you a flavour this
-is a sample configuration file:
+As noted the configuration file is Lua with the addition of some
+window-related primitives.  To give you a flavour this is a sample
+configuration file:
 
     --
     -- If Xine is launched it should be "always on top"
