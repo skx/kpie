@@ -1,9 +1,18 @@
 KPie
 ----
 
-A simple window manipulation tool, modeled after devil's pie.
+KPie is a simple window manipulation tool, modeled after devil's pie,
+with a Lua-based configuration file.
 
-The configuration is dynamic and built around lua.
+Usage is:
+
+     kpie [options] [lua-config-file.lua]
+
+Options are currently limited to:
+
+    --debug    - Show debugging information.
+    --single   - Process each window once, then exit.
+    --version  - Show the version number.
 
 
 Overview
@@ -48,8 +57,8 @@ including your panel(s).
 
 
 
-Helper
-------
+Configuration Generator
+-----------------------
 
 Included within the repository is a sample configuration file,
 [dump.lua](samples/dump.lua), which is designed to be a helpful starting
@@ -94,6 +103,10 @@ Then build via:
 
     make
 
+
+
+Command Line Options
+--------------------
 
 
 Primitives
