@@ -51,6 +51,10 @@ if ( is_maximized() ) then
    print( "     maximize()" );
 end
 
+if ( is_minimized() ) then
+   print( "     minimize()" );
+end
+
 if ( is_fullscreen() ) then
    print( "     fullscreen()" );
 end
