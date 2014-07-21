@@ -177,12 +177,34 @@ static int lua_maximize( lua_State *L)
 
 
 /**
+ * Minimize the current window.
+ */
+static int lua_minimize( lua_State *L)
+{
+    UNUSED(L);
+    wnck_window_minimize(g_window);
+    return 0;
+}
+
+
+/**
  * UnMaximize the current window.
  */
 static int lua_unmaximize( lua_State *L)
 {
     UNUSED(L);
     wnck_window_unmaximize(g_window);
+    return 0;
+}
+
+
+/**
+ * Unminimize the current window.
+ */
+static int lua_unminimize( lua_State *L)
+{
+    UNUSED(L);
+    wnck_window_unminimize(g_window, 0);
     return 0;
 }
 
@@ -215,6 +237,19 @@ static int lua_unfullscreen( lua_State *L)
 static int lua_is_maximized( lua_State *L )
 {
     if ( wnck_window_is_maximized( g_window ) )
+        lua_pushboolean(L,1);
+    else
+        lua_pushboolean(L,0);
+    return 1;
+}
+
+
+/**
+ * Is the window minimized?
+ */
+static int lua_is_minimized( lua_State *L )
+{
+    if ( wnck_window_is_minimized( g_window ) )
         lua_pushboolean(L,1);
     else
         lua_pushboolean(L,0);
@@ -555,11 +590,14 @@ int main (int argc, char **argv)
     lua_register(L, "screen_height", lua_screen_height);
 
     /**
-     * Max
+     * Min/Max/Fullscreen
      */
     lua_register(L, "maximize", lua_maximize);
+    lua_register(L, "minimize", lua_minimize);
     lua_register(L, "unmaximize", lua_unmaximize);
+    lua_register(L, "unminimize", lua_unminimize);
     lua_register(L, "is_maximized", lua_is_maximized);
+    lua_register(L, "is_minimized", lua_is_minimized);
     lua_register(L, "fullscreen", lua_fullscreen);
     lua_register(L, "unfullscreen", lua_unfullscreen);
     lua_register(L, "is_fullscreen", lua_is_fullscreen);
