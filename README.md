@@ -100,15 +100,25 @@ complex layout interactively.
 Installation
 ------------
 
-Firstly install the dependencies:
+You can install binary packages for Debian GNU/Linux from the authors
+repository:
 
-      sudo apt-get install libwnck-dev
-      sudo apt-get install liblua5.1-0-dev
+* http://packages.steve.org.uk/kpie/
+   * The package will also add an entry to your system-menu at "`System Tools | Preferences | Startup Applications`"
 
-Then build via:
+If you prefer to build from source you can do so providing you have the
+dependencies installed.  Beyond the necessities, a compiler and `make`,
+you'll need:
 
-    make
+* `libwnck-dev`
+* `liblua5.1-0-dev`
 
+Upon a Debian GNU/Linux system these may be installed via:
+
+      sudo apt-get install libwnck-dev liblua5.1-0-dev
+
+With the dependencies in-place you should be able to compile
+the binary by simply running `make`.
 
 
 Command Line Options
