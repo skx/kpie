@@ -24,19 +24,3 @@ if ( window_title() == "xlogo" ) then
    pin()
 end
 
-
---
--- If you want to debug things you could uncomment this to see the windows right now.
---
-
---
--- print( "Window Title: " .. window_title() )
--- print( "\tClass: " .. window_class() )
---
-
---
--- x,y = xy()
--- width,height = size()
--- print ( "X,Y: " .. x .. "," .. y .. " Width/Height:" .. width .. "," .. height );
---
-
