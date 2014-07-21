@@ -1,21 +1,40 @@
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+/**
+ * kpie.c - Devils Pie-like window manipulation with Lua.
+ *
+ */
 
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-#include <libwnck/libwnck.h>
+
+
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <sys/stat.h>
 #include <sys/types.h>
 
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+#include <libwnck/libwnck.h>
+
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
+
+
+
 
 /**
- * The window we're currently manipulating..
+ * The window we're currently manipulating.
+ *
+ * We use a callback from libwnck which is invoked every time a window
+ * is created.
+ *
+ * The libwnck callback updates this pointer to point to a single window,
+ * then invokes the Lua function upon it.
+ *
+ * This is safe because the Lua invokation is single-threaded.
+ *
  */
 WnckWindow *g_window;
 
@@ -29,12 +48,12 @@ lua_State* L;
 /**
  * The lua configuration file we parse/use.
  */
-char g_config[1024]={'\0'};
+char g_config_file[1024]={'\0'};
 
 
 
 /**
- * Return the window title
+ * Return the title of this window.
  */
 static int lua_window_title(lua_State *L)
 {
@@ -43,9 +62,8 @@ static int lua_window_title(lua_State *L)
 }
 
 
-
 /**
- * Return the window application
+ * Return the application which created this window.
  */
 static int lua_window_application(lua_State *L)
 {
@@ -57,7 +75,7 @@ static int lua_window_application(lua_State *L)
 
 
 /**
- * Return the window class.
+ * Return the class of this window.
  */
 static int lua_window_class(lua_State *L)
 {
@@ -69,7 +87,7 @@ static int lua_window_class(lua_State *L)
 
 
 /**
- * Return the window ID.
+ * Return the ID of this window.
  */
 static int lua_window_id(lua_State *L)
 {
@@ -86,7 +104,7 @@ static int lua_window_id(lua_State *L)
 
 
 /**
- * Return the window PID.
+ * Return the PID of the process that created this window.
  */
 static int lua_window_pid(lua_State *L)
 {
@@ -100,6 +118,7 @@ static int lua_window_pid(lua_State *L)
     }
     return 1;
 }
+
 
 /**
  * Get the size of the screen.
@@ -121,8 +140,9 @@ static int lua_screen_height(lua_State *L)
     return 1;
 }
 
+
 /**
- * Maximize the window.
+ * Maximize the current window.
  */
 static int lua_maximize( lua_State *L)
 {
@@ -130,14 +150,16 @@ static int lua_maximize( lua_State *L)
     return 0;
 }
 
+
 /**
- * UnMaximize the window.
+ * UnMaximize the current window.
  */
 static int lua_unmaximize( lua_State *L)
 {
     wnck_window_unmaximize(g_window);
     return 0;
 }
+
 
 /**
  * Set the window to be fullscreen.
@@ -148,6 +170,7 @@ static int lua_fullscreen( lua_State *L)
     return 0;
 }
 
+
 /**
  * Unset the window to be fullscreen.
  */
@@ -156,6 +179,7 @@ static int lua_unfullscreen( lua_State *L)
     wnck_window_set_fullscreen(g_window, FALSE );
     return 0;
 }
+
 
 /**
  * Is the window maximized?
@@ -168,6 +192,7 @@ static int lua_is_maximized( lua_State *L )
         lua_pushboolean(L,0);
     return 1;
 }
+
 
 /**
  * Is the window fullscreen?
@@ -183,7 +208,7 @@ static int lua_is_fullscreen( lua_State *L)
 
 
 /**
- * Set the window to be above all windows.
+ * Set the window to be above all other windows.
  */
 static int lua_above( lua_State *L)
 {
@@ -203,7 +228,7 @@ static int lua_below( lua_State *L)
 
 
 /**
- * Pin the window.
+ * Pin the window to all workspaces.
  */
 static int lua_pin( lua_State *L)
 {
@@ -211,14 +236,16 @@ static int lua_pin( lua_State *L)
     return 0;
 }
 
+
 /**
- * Unpin the window.
+ * Unpin the window from all workspaces.
  */
 static int lua_unpin( lua_State *L)
 {
     wnck_window_unpin (g_window);
     return 0;
 }
+
 
 /**
  * Get/Set the X/Y coords of the window.
@@ -253,6 +280,7 @@ static int lua_xy( lua_State *L )
     return 2;
 }
 
+
 /**
  * Get/Set the width/height of the window.
  */
@@ -271,7 +299,7 @@ static int lua_size( lua_State *L )
         wnck_window_set_geometry(g_window,
                                  WNCK_WINDOW_GRAVITY_CURRENT,
                                  WNCK_WINDOW_CHANGE_WIDTH + WNCK_WINDOW_CHANGE_HEIGHT,
-				-1,-1,h,w);
+                                 -1,-1,h,w);
 
     }
 
@@ -285,14 +313,16 @@ static int lua_size( lua_State *L )
     return 2;
 }
 
+
 /**
- * Focus the window.
+ * Focus the current window.
  */
 static int lua_focus(lua_State *L)
 {
     wnck_window_activate (g_window, 0);
     return 0;
 }
+
 
 /**
  * Get/set the workspace the window is on.
@@ -339,6 +369,7 @@ static int lua_workspace(lua_State *L)
     return 1;
 }
 
+
 /**
  * This function is called when a new window is created.
  *
@@ -354,7 +385,6 @@ on_window_opened (WnckScreen *screen,
                   WnckWindow *window,
                   gpointer    data)
 {
-
     /**
      * Update the global "current window" to point to the current
      * window which has just been created.
@@ -362,26 +392,27 @@ on_window_opened (WnckScreen *screen,
     g_window = window;
 
     /**
-     * See if the users lua-file is present.
+     * See if the users lua-file is present, if not return.
      */
     struct stat sb;
-    if(stat(g_config,&sb) < 0)
+    if(stat(g_config_file,&sb) < 0)
         return;
 
-    int error = luaL_dofile(L, g_config );
+
+    /**
+     * Load/Invoke the configuration file.
+     */
+    int error = luaL_dofile(L, g_config_file);
 
     if(error)
     {
-        // the top of the stack should be the error string
         if (!lua_isstring(L, lua_gettop(L)))
             printf("ERROR: no detail found\n" );
 
-        // get the top of the stack as the error and pop it off
         const char * str = lua_tostring(L, lua_gettop(L));
         lua_pop(L, 1);
 
         printf("ERROR: %s\n", str );
-
         exit(1);
     }
 
@@ -390,7 +421,7 @@ on_window_opened (WnckScreen *screen,
 
 
 /**
- * Entry point.
+ * Entry point to our code.
  */
 int main (int argc, char **argv)
 {
@@ -443,39 +474,52 @@ int main (int argc, char **argv)
     lua_register(L,"xy", lua_xy );
     lua_register(L,"size", lua_size );
 
+
     /**
      * Misc.
      */
     lua_register(L,"focus", lua_focus );
     lua_register(L,"workspace", lua_workspace );
 
+
     /**
      * Setup our default configuration file.
      */
     if ( getenv( "HOME" ) != NULL )
-        snprintf( g_config, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
+        snprintf( g_config_file, 1000, "%s/.kpie.lua", getenv( "HOME" ) );
 
     /**
      * If specified use a different one.
      */
     if ( argc > 1 )
-        snprintf( g_config, 1000, argv[1] );
+        snprintf( g_config_file, 1000, argv[1] );
 
 
-    GMainLoop *loop;
-    WnckScreen *screen;
-
+    /**
+     * Initialize GDK
+     */
     gdk_init (&argc, &argv);
 
-    loop = g_main_loop_new (NULL, FALSE);
-    screen = wnck_screen_get_default ();
+    GMainLoop *loop = g_main_loop_new (NULL, FALSE);
+    WnckScreen *screen = wnck_screen_get_default ();
 
+
+    /**
+     * Ensure our callback is invoked when new windows are opened.
+     */
     g_signal_connect (screen, "window-opened",
                       G_CALLBACK (on_window_opened), NULL);
 
+    /**
+     * Launch - NOTE: Never returns.
+     */
     g_main_loop_run (loop);
 
+    /**
+     * Never reached.
+     */
     g_main_loop_unref (loop);
+    lua_close(L);
 
     return 0;
 }
