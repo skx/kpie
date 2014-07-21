@@ -1,10 +1,21 @@
 --
--- Show some information just the once.
+-- If kpie is launched with --debug then the DEBUG variable will be
+-- set to "true".
 --
-if ( not shown ) then
-   shown = true
-   print( "Screen width : " .. screen_width() )
-   print( "Screen height: " .. screen_height() )
+-- Otherwise it will be set to "false" and this block will not be executed.
+--
+if ( DEBUG ) then
+
+   if ( not shown ) then
+      shown = true
+      print( "Screen width : " .. screen_width() )
+      print( "Screen height: " .. screen_height() )
+   end
+
+   print( "Title " .. window_title() )
+   print( "\tApplication: " .. window_application() )
+   print( "\tClass " .. window_class() )
+
 end
 
 

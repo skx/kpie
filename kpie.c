@@ -695,6 +695,18 @@ int main (int argc, char **argv)
 
 
     /**
+     * Set the value DEBUG to be true/false depending on how we were
+     * invoked.
+     */
+    if ( g_debug )
+        lua_pushboolean(L, 1 );
+    else
+        lua_pushboolean(L, 0 );
+    lua_setglobal(L, "DEBUG" );
+
+
+
+    /**
      * If a configuration file was specified use a different one.
      */
     int index;
