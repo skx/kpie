@@ -127,6 +127,7 @@ The following primitives are available:
   * `size` - Get/Set the width/height of a window.
 * Misc
   * `focus` - Focus the window.
+  * `kill` - Close the window, forcibly.
   * `workspace` - Get/set the workspace the window is active on.
     * The return value may be -1 if the window is pinned, or invisible.
 
