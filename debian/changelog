@@ -1,3 +1,9 @@
+kpie (0.2-1) unstable; urgency=low
+
+  * Stable and production-ready.
+
+ -- Steve Kemp <steve@steve.org.uk>  Mon, 21 Jul 2014 14:14:14 +0000
+
 kpie (0.1-1) unstable; urgency=low
 
   * Initial packages.
