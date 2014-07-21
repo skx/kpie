@@ -37,6 +37,11 @@
 #include "lauxlib.h"
 
 
+#ifndef lua_open
+#  define lua_open luaL_newstate
+#endif
+
+
 #ifndef UNUSED
 #  define UNUSED(x) (void)(x)
 #endif
@@ -68,6 +73,7 @@ lua_State* L;
  * The Lua configuration file we parse/use.
  */
 gchar *g_config_file;
+
 
 /**
  * Are we running with --debug ?
@@ -571,6 +577,7 @@ int main (int argc, char **argv)
      * Initialize Lua.
      */
     L = lua_open();
+
     luaL_openlibs(L);
 
 
