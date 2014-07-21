@@ -46,7 +46,7 @@ point if you wish to script the manipulation of your windows.
 
 Simply run:
 
-    $ ./kpie ./dump.lua
+    $ ./kpie ./samples/dump.lua
 
 This will output chunks of config which you can edit or save:
 
