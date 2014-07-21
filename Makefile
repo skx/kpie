@@ -30,7 +30,7 @@ LDFLAGS+=$(shell pkg-config --libs libwnck-1.0) $(shell pkg-config --libs lua5.1
 #  Build the application.
 #
 kpie: kpie.c Makefile
-	gcc -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS) -o kpie kpie.c
+	gcc -o kpie kpie.c -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS)
 
 
 #
