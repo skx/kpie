@@ -52,7 +52,7 @@
  * The libwnck callback updates this pointer to point to a single window,
  * then invokes the Lua function upon it.
  *
- * This is safe because the Lua invokation is single-threaded.
+ * This is safe because the Lua invocation is single-threaded.
  *
  */
 WnckWindow *g_window;
