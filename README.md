@@ -155,6 +155,8 @@ The following primitives are available:
   * `xy` - Get/Set the X/Y coordinates of a window.
   * `size` - Get/Set the width/height of a window.
 * Misc
+  * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
+    * This can be used to control whether you output debugging information.
   * `focus` - Focus the window.
   * `kill` - Close the window, forcibly.
   * `workspace` - Get/set the workspace the window is active on.
