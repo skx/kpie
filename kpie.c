@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -514,6 +515,51 @@ static int lua_workspaces( lua_State *L )
 
 
 /**
+ * Return a table of all files in the given directory.
+ *
+ * This is for inclusion-purposes, see the FAQ.
+ */
+static int lua_readdir(lua_State *L)
+{
+    struct dirent *dp;
+    DIR *dir;
+    int count = 0;
+
+    const char *directory = luaL_checkstring(L,1);
+
+    lua_newtable(L);
+
+    dir = opendir(directory);
+
+    while (dir)
+    {
+        if ((dp = readdir(dir)) != NULL)
+        {
+            /* Store in the table. */
+            lua_pushnumber(L, count);        /* table index */
+            lua_pushstring(L, dp->d_name );  /* value this index */
+            lua_settable(L, -3);
+
+            count += 1;
+        }
+        else
+        {
+            closedir( dir );
+            dir = 0;
+        }
+    }
+
+
+    /* Make sure LUA knows how big our table is. */
+    lua_pushliteral(L, "n");
+    lua_pushnumber(L, count -1 );
+    lua_rawset(L, -3);
+
+    return 1;        /* we've left one item on the stack */
+}
+
+
+/**
  * This function is called when a new window is created.
  *
  * It has two jobs:
@@ -635,6 +681,7 @@ int main (int argc, char **argv)
     lua_register(L,"workspace", lua_workspace );
     lua_register(L,"kill", lua_kill );
     lua_register(L,"workspaces", lua_workspaces );
+    lua_register(L,"readdir", lua_readdir );
 
 
     /**
