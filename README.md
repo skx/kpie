@@ -9,15 +9,17 @@ The configuration is dynamic and built around lua.
 Overview
 --------
 
-If the file `~/.kpie.lua` exists then it will be parsed every time a new
-window is opened upon your system.  If you start `kpie` with a named
-Lua file that will be used instead, for example:
+If the file `~/.kpie.lua` exists then it will be parsed and executed
+every time a new window is opened upon your system.
+
+If you start `kpie` with a named Lua file that will be used instead, for
+example:
 
     $ kpie ~/.config/kpie.lua
 
-Regardless of what the filename is, the configuration file is Lua with
+Regardless of which file is used, the configuration file is Lua with
 the addition of some window-related primitives.  To give you a flavour this
-is the default configuration file:
+is a sample configuration file:
 
     --
     -- If Xine is launched it should be "always on top"
@@ -36,12 +38,21 @@ is the default configuration file:
 
 **NOTE**: More configuration files are included in the [sample directory](samples/).
 
+The key thing to understand is that the **same** configuration file will be
+invoked for **every** window on your system, on the basis that you'll limit
+your actions to specific windows via the matching options.
+
+For example if you had a configuration file which read merely "`maximize()`"
+your desktop would become very odd, as **all** the windows would be maximized,
+including your panel(s).
+
+
 
 Helper
 ------
 
-Included within the repository is a sample configuration file named
-[dump.lua](samples/dump.lua) which is designed to be a helpful starting
+Included within the repository is a sample configuration file,
+[dump.lua](samples/dump.lua), which is designed to be a helpful starting
 point if you wish to script the manipulation of your windows.
 
 Simply run:
