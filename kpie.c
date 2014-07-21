@@ -280,6 +280,28 @@ static int lua_unpin( lua_State *L)
 
 
 /**
+ * Shade this window.
+ */
+static int lua_shade( lua_State *L )
+{
+    UNUSED(L);
+    wnck_window_shade (g_window);
+    return 0;
+}
+
+
+/**
+ * Unshade this window.
+ */
+static int lua_unshade( lua_State *L )
+{
+    UNUSED(L);
+    wnck_window_unshade (g_window);
+    return 0;
+}
+
+
+/**
  * Get/Set the X/Y coords of the window.
  */
 static int lua_xy( lua_State *L )
@@ -550,6 +572,8 @@ int main (int argc, char **argv)
     lua_register(L, "below", lua_below );
     lua_register(L, "pin", lua_pin );
     lua_register(L, "unpin", lua_unpin );
+    lua_register(L, "shade", lua_shade );
+    lua_register(L, "unshade", lua_unshade );
 
 
     /**
