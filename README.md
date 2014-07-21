@@ -13,12 +13,11 @@ If the file `~/.kpie.lua` exists then it will be parsed every time a new
 window is opened upon your system.  If you start `kpie` with a named
 Lua file that will be used instead, for example:
 
-   $ kpie ~/.config/kpie.lua
+    $ kpie ~/.config/kpie.lua
 
-Regardless of what the filename is the configuration file is pure-lua with
+Regardless of what the filename is, the configuration file is Lua with
 the addition of some window-related primitives.  To give you a flavour this
 is the default configuration file:
-
 
     --
     -- If Xine is launched it should be "always on top"
@@ -35,17 +34,19 @@ is the default configuration file:
         pin()
     end
 
+**NOTE**: More configuration files are included in the [sample directory](samples/).
+
 
 Helper
 ------
 
-Included within the repository is a configuration file called `dump.lua`,
-this is designed to provide a helpful starting point if you wish to script
-the manipulation of your windows.
+Included within the repository is a sample configuration file named
+[dump.lua](samples/dump.lua) which is designed to be a helpful starting
+point if you wish to script the manipulation of your windows.
 
 Simply run:
 
-   $ ./kpie ./dump.lua
+    $ ./kpie ./dump.lua
 
 This will output chunks of config which you can edit or save:
 
