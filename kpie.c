@@ -633,7 +633,7 @@ int main (int argc, char **argv)
      */
     int index;
     for (index = optind; index < argc; index++)
-        snprintf( g_config_file, 1000, argv[index] );
+        snprintf( g_config_file, 1000, "%s", argv[index] );
 
 
     if ( g_debug )
