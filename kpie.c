@@ -82,6 +82,15 @@ gchar *g_config_file;
 int g_debug = FALSE;
 
 
+/**
+ * Show a message if we're debugging.
+ */
+void debug( const char *msg )
+{
+    if ( g_debug )
+        printf( "DEBUG: %s\n", msg );
+}
+
 
 /**
  * Return the title of this window.
@@ -99,7 +108,6 @@ static int lua_window_title(lua_State *L)
 static int lua_window_application(lua_State *L)
 {
     WnckApplication *a = wnck_window_get_application(g_window);
-
     lua_pushstring( L, wnck_application_get_name(a) );
     return 1;
 }
@@ -178,6 +186,7 @@ static int lua_screen_height(lua_State *L)
 static int lua_maximize( lua_State *L)
 {
     UNUSED(L);
+    debug( "maximizing window" );
     wnck_window_maximize(g_window);
     return 0;
 }
@@ -189,6 +198,7 @@ static int lua_maximize( lua_State *L)
 static int lua_minimize( lua_State *L)
 {
     UNUSED(L);
+    debug( "minimizing window" );
     wnck_window_minimize(g_window);
     return 0;
 }
@@ -200,6 +210,7 @@ static int lua_minimize( lua_State *L)
 static int lua_unmaximize( lua_State *L)
 {
     UNUSED(L);
+    debug( "unmaximize window" );
     wnck_window_unmaximize(g_window);
     return 0;
 }
@@ -211,6 +222,7 @@ static int lua_unmaximize( lua_State *L)
 static int lua_unminimize( lua_State *L)
 {
     UNUSED(L);
+    debug( "unminimize window" );
     wnck_window_unminimize(g_window, 0);
     return 0;
 }
@@ -222,6 +234,7 @@ static int lua_unminimize( lua_State *L)
 static int lua_fullscreen( lua_State *L)
 {
     UNUSED(L);
+    debug( "fullscreen window" );
     wnck_window_set_fullscreen(g_window, TRUE );
     return 0;
 }
@@ -233,6 +246,7 @@ static int lua_fullscreen( lua_State *L)
 static int lua_unfullscreen( lua_State *L)
 {
     UNUSED(L);
+    debug( "unfullscreen window" );
     wnck_window_set_fullscreen(g_window, FALSE );
     return 0;
 }
@@ -283,6 +297,7 @@ static int lua_is_fullscreen( lua_State *L)
 static int lua_above( lua_State *L)
 {
     UNUSED(L);
+    debug( "above window" );
     wnck_window_make_above (g_window);
     return 0;
 }
@@ -294,6 +309,7 @@ static int lua_above( lua_State *L)
 static int lua_below( lua_State *L)
 {
     UNUSED(L);
+    debug( "below window" );
     wnck_window_unmake_above (g_window);
     return 0;
 }
@@ -305,6 +321,7 @@ static int lua_below( lua_State *L)
 static int lua_pin( lua_State *L)
 {
     UNUSED(L);
+    debug( "pin window" );
     wnck_window_pin (g_window);
     return 0;
 }
@@ -316,6 +333,7 @@ static int lua_pin( lua_State *L)
 static int lua_unpin( lua_State *L)
 {
     UNUSED(L);
+    debug( "unpin window" );
     wnck_window_unpin (g_window);
     return 0;
 }
@@ -327,6 +345,7 @@ static int lua_unpin( lua_State *L)
 static int lua_shade( lua_State *L )
 {
     UNUSED(L);
+    debug( "shade window" );
     wnck_window_shade (g_window);
     return 0;
 }
@@ -338,6 +357,7 @@ static int lua_shade( lua_State *L )
 static int lua_unshade( lua_State *L )
 {
     UNUSED(L);
+    debug( "unshade window" );
     wnck_window_unshade (g_window);
     return 0;
 }
@@ -357,6 +377,11 @@ static int lua_xy( lua_State *L )
     {
         int newx = luaL_checknumber(L,1);
         int newy = luaL_checknumber(L,2);
+
+
+        char *x = g_strdup_printf( "xy(%d,%d);", newx, newy );
+        debug( x );
+        g_free(x);
 
         wnck_window_set_geometry(g_window,
                                  WNCK_WINDOW_GRAVITY_CURRENT,
@@ -392,6 +417,11 @@ static int lua_size( lua_State *L )
         int h = luaL_checknumber(L,1);
         int w = luaL_checknumber(L,2);
 
+
+        char *x = g_strdup_printf( "size(%d,%d);", h, w );
+        debug( x );
+        g_free(x);
+
         wnck_window_set_geometry(g_window,
                                  WNCK_WINDOW_GRAVITY_CURRENT,
                                  WNCK_WINDOW_CHANGE_WIDTH + WNCK_WINDOW_CHANGE_HEIGHT,
@@ -416,6 +446,7 @@ static int lua_size( lua_State *L )
 static int lua_focus(lua_State *L)
 {
     UNUSED(L);
+    debug( "focus window" );
     wnck_window_activate (g_window, 0);
     return 0;
 }
@@ -452,6 +483,11 @@ static int lua_workspace(lua_State *L)
         }
         else
         {
+
+            char *x = g_strdup_printf( "move window to workspace %d", number );
+            debug( x );
+            g_free(x);
+
             WnckScreen *screen;
             WnckWorkspace *workspace;
 
@@ -484,6 +520,7 @@ static int lua_workspace(lua_State *L)
 static int lua_kill( lua_State *L )
 {
     UNUSED(L);
+    debug( "kill window" );
     wnck_window_close(g_window, 0);
     return( 0 );
 }
