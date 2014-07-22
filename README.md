@@ -154,12 +154,14 @@ The following primitives are available:
 * Movement
   * `xy` - Get/Set the X/Y coordinates of a window.
   * `size` - Get/Set the width/height of a window.
-* Misc
-  * `focus` - Focus the window.
-  * `kill` - Close the window, forcibly.
+* Workspaces
+  * `activate_workspace` - Change to the given workspace/virtual-desktop.
   * `workspace` - Get/set the workspace the window is active on.
     * The return value may be -1 if the window is pinned, or invisible.
   * `workspaces` - Get/set the number of workspaces/virtual-desktops.
+* Misc
+  * `focus` - Focus the window.
+  * `kill` - Close the window, forcibly.
 * Variables
   * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
     * This can be used to control whether you output debugging information.

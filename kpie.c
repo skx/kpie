@@ -452,6 +452,44 @@ static int lua_focus(lua_State *L)
 }
 
 
+
+/**
+ * Activate the given workspace.
+ */
+static int lua_activate_workspace(lua_State *L)
+{
+    int number = luaL_checknumber(L, 1);
+
+    /**
+     * Get the count of workspaces.
+     */
+    WnckScreen *screen  = wnck_window_get_screen(g_window);
+    int count = wnck_screen_get_workspace_count( screen );
+
+    if (number<0 || number>count) {
+        g_warning("Workspace number out of bounds: %d", number);
+    }
+    else
+    {
+        char *x = g_strdup_printf( "activate workspace %d", number );
+        debug( x );
+        g_free(x);
+
+        WnckScreen *screen;
+        WnckWorkspace *workspace;
+
+        screen = wnck_window_get_screen(g_window);
+        workspace = wnck_screen_get_workspace(screen, number-1);
+
+        if (workspace)
+            wnck_workspace_activate( workspace, 0 );
+        else
+            g_warning("Failed to get workspace %d", number);
+    }
+    return 0;
+}
+
+
 /**
  * Get/set the workspace the window is on.
  */
@@ -706,12 +744,18 @@ int main (int argc, char **argv)
 
 
     /**
+     * Workspaces.
+     */
+    lua_register(L,"activate_workspace", lua_activate_workspace );
+    lua_register(L,"workspace", lua_workspace );
+    lua_register(L,"workspaces", lua_workspaces );
+
+
+    /**
      * Misc.
      */
     lua_register(L,"focus", lua_focus );
-    lua_register(L,"workspace", lua_workspace );
     lua_register(L,"kill", lua_kill );
-    lua_register(L,"workspaces", lua_workspaces );
     lua_register(L,"readdir", lua_readdir );
 
 
