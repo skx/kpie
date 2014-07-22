@@ -469,14 +469,10 @@ static int lua_workspace(lua_State *L)
 
 
         /**
-         * Count the workspaces.
+         * Get the count of workspaces.
          */
         WnckScreen *screen  = wnck_window_get_screen(g_window);
-        int count = 0;
-        GList *ws_l;
-        for (ws_l = wnck_screen_get_workspaces (screen); ws_l != NULL; ws_l = ws_l->next)
-            count += 1;
-
+        int count = wnck_screen_get_workspace_count( screen );
 
         if (number<0 || number>count) {
             g_warning("Workspace number out of bounds: %d", number);
@@ -530,21 +526,8 @@ static int lua_kill( lua_State *L )
  */
 static int lua_workspaces( lua_State *L )
 {
-    /**
-     * Get the screen, and from that the list.
-     */
     WnckScreen *screen  = wnck_window_get_screen(g_window);
-
-    /**
-     * Iterate over the workspaces.
-     */
-    int count = 0;
-
-    GList *ws_l;
-    for (ws_l = wnck_screen_get_workspaces (screen); ws_l != NULL; ws_l = ws_l->next)
-    {
-        count += 1;
-    }
+    int count = wnck_screen_get_workspace_count( screen );
 
     lua_pushinteger(L, count );
     return 1;
