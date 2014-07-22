@@ -159,7 +159,7 @@ The following primitives are available:
   * `kill` - Close the window, forcibly.
   * `workspace` - Get/set the workspace the window is active on.
     * The return value may be -1 if the window is pinned, or invisible.
-  * `workspaces` - Count the number of workspaces.
+  * `workspaces` - Get/set the number of workspaces/virtual-desktops.
 * Variables
   * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
     * This can be used to control whether you output debugging information.
