@@ -527,8 +527,19 @@ static int lua_kill( lua_State *L )
 static int lua_workspaces( lua_State *L )
 {
     WnckScreen *screen  = wnck_window_get_screen(g_window);
-    int count = wnck_screen_get_workspace_count( screen );
 
+    int top = lua_gettop(L);
+
+    /**
+     * Set the values?
+     */
+    if ( top > 0 )
+    {
+        int newcount = luaL_checknumber(L,1);
+        wnck_screen_change_workspace_count( screen, newcount );
+    }
+
+    int count = wnck_screen_get_workspace_count( screen );
     lua_pushinteger(L, count );
     return 1;
 }
