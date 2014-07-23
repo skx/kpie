@@ -60,4 +60,4 @@ indent:
 #
 clean:
 	rm kpie || true
-
+	find . -name '*~' -delete || true
