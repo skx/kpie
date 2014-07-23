@@ -160,7 +160,7 @@ void init_lua(int _debug, const char *config_file)
     /**
      * Save the constructor paramaters.
      */
-    g_config = (char *) config_file;
+    g_config = g_strdup(config_file);
     g_debug = _debug;
 }
 
