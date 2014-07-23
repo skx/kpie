@@ -57,6 +57,7 @@ void invoke_lua();
 int lua_above(lua_State * L);
 int lua_activate_workspace(lua_State * L);
 int lua_below(lua_State * L);
+int lua_exists(lua_State * L);
 int lua_focus(lua_State * L);
 int lua_fullscreen(lua_State * L);
 int lua_is_fullscreen(lua_State * L);

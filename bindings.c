@@ -109,6 +109,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(L, "above", lua_above);
     lua_register(L, "activate_workspace", lua_activate_workspace);
     lua_register(L, "below", lua_below);
+    lua_register(L, "exists", lua_exists);
     lua_register(L, "focus", lua_focus);
     lua_register(L, "fullscreen", lua_fullscreen);
     lua_register(L, "is_fullscreen", lua_is_fullscreen);
@@ -283,6 +284,22 @@ int lua_below(lua_State * L)
     debug("below window");
     wnck_window_unmake_above(g_window);
     return 0;
+}
+
+
+/**
+ * Does the given file/directory exist?
+ */
+int lua_exists(lua_State * L)
+{
+    const char *path = luaL_checkstring(L, 1);
+
+    struct stat sb;
+    if (stat(path, &sb) < 0)
+        lua_pushboolean(L, 0);
+    else
+        lua_pushboolean(L, 1);
+    return 1;
 }
 
 
