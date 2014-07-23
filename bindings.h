@@ -54,28 +54,28 @@ void invoke_lua();
  **/
 
 
-int lua_above( lua_State *L);
+int lua_above(lua_State *L);
 int lua_activate_workspace(lua_State *L);
-int lua_below( lua_State *L);
+int lua_below(lua_State *L);
 int lua_focus(lua_State *L);
-int lua_fullscreen( lua_State *L);
-int lua_is_fullscreen( lua_State *L);
-int lua_is_maximized( lua_State *L );
-int lua_is_minimized( lua_State *L );
-int lua_kill( lua_State *L );
-int lua_maximize( lua_State *L);
-int lua_minimize( lua_State *L);
-int lua_pin( lua_State *L);
+int lua_fullscreen(lua_State *L);
+int lua_is_fullscreen(lua_State *L);
+int lua_is_maximized(lua_State *L );
+int lua_is_minimized(lua_State *L );
+int lua_kill(lua_State *L );
+int lua_maximize(lua_State *L);
+int lua_minimize(lua_State *L);
+int lua_pin(lua_State *L);
 int lua_readdir(lua_State *L);
 int lua_screen_height(lua_State *L);
 int lua_screen_width(lua_State *L);
-int lua_shade( lua_State *L );
-int lua_size( lua_State *L );
-int lua_unfullscreen( lua_State *L);
-int lua_unmaximize( lua_State *L);
-int lua_unminimize( lua_State *L);
-int lua_unpin( lua_State *L);
-int lua_unshade( lua_State *L );
+int lua_shade(lua_State *L );
+int lua_size(lua_State *L );
+int lua_unfullscreen(lua_State *L);
+int lua_unmaximize(lua_State *L);
+int lua_unminimize(lua_State *L);
+int lua_unpin(lua_State *L);
+int lua_unshade(lua_State *L );
 int lua_window_application(lua_State *L);
 int lua_window_class(lua_State *L);
 int lua_window_id(lua_State *L);
@@ -83,7 +83,7 @@ int lua_window_pid(lua_State *L);
 int lua_window_title(lua_State *L);
 int lua_window_type(lua_State *L);
 int lua_workspace(lua_State *L);
-int lua_workspaces( lua_State *L );
-int lua_xy( lua_State *L );
+int lua_workspaces(lua_State *L );
+int lua_xy(lua_State *L );
 
 #endif
