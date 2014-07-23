@@ -48,8 +48,8 @@ LDFLAGS+=$(shell pkg-config --libs libwnck-1.0) $(shell pkg-config --libs ${LVER
 #
 #  Build the application.
 #
-kpie: kpie.c Makefile
-	gcc -o kpie kpie.c -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS)
+kpie: kpie.c bindings.c Makefile
+	gcc -o kpie kpie.c bindings.c -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS)
 
 
 #
