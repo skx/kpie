@@ -132,6 +132,8 @@ The following primitives are available:
 
 * Information
   * `window_title` - Get the title of the new window.
+  * `window_type` - Get the type of the window.
+     * `"WINDOW_NORMAL"`, `"WINDOW_TOOLBAR"`, etc.
   * `window_application` - Get the application which created the window.
   * `window_class` - Get the class of the new window.
   * `window_id` - Get the ID of the new window.

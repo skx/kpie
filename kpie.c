@@ -102,6 +102,49 @@ static int lua_window_title(lua_State *L)
 }
 
 
+
+/**
+ * Return the type of this window.
+ */
+static int lua_window_type(lua_State *L)
+{
+    WnckWindowType t = wnck_window_get_window_type( g_window );
+
+    switch( t )
+    {
+    case WNCK_WINDOW_NORMAL:
+        lua_pushstring( L, "WINDOW_NORMAL" );
+        break;
+    case WNCK_WINDOW_DESKTOP:
+        lua_pushstring( L, "WINDOW_DESKTOP" );
+        break;
+    case WNCK_WINDOW_DOCK:
+        lua_pushstring( L, "WINDOW_DOCK" );
+        break;
+    case WNCK_WINDOW_DIALOG:
+        lua_pushstring( L, "WINDOW_DIALOG" );
+        break;
+    case WNCK_WINDOW_TOOLBAR:
+        lua_pushstring( L, "WINDOW_TOOLBAR" );
+        break;
+    case WNCK_WINDOW_MENU:
+        lua_pushstring( L, "WINDOW_MENU" );
+        break;
+    case WNCK_WINDOW_UTILITY:
+        lua_pushstring( L, "WINDOW_UTILITY" );
+        break;
+    case WNCK_WINDOW_SPLASHSCREEN:
+        lua_pushstring( L, "WINDOW_SPLASHSCREEN" );
+        break;
+    default:
+        g_warning("Unknown window-type" );
+        return 0;
+        break;
+    };
+    return 1;
+}
+
+
 /**
  * Return the application which created this window.
  */
@@ -704,6 +747,7 @@ int main (int argc, char **argv)
      * Information.
      */
     lua_register(L, "window_title", lua_window_title);
+    lua_register(L, "window_type", lua_window_type);
     lua_register(L, "window_application", lua_window_application);
     lua_register(L, "window_class", lua_window_class);
     lua_register(L, "window_id",    lua_window_id);
