@@ -22,16 +22,24 @@ ifeq ($(UNAME),Darwin)
 endif
 
 
+#
+#  Common definitions.
+#
+CC=gcc
+LINKER=$(CC) -o
+
 
 #
 #  CFLAGS
 #
+#  0.  Define a version.
 #  1.  Add Debian hardening flags.
 #  2.  Add common-options
 #  3.  Add libwnck + lua5.1
 #
-CFLAGS=$(shell dpkg-buildflags --get CFLAGS)
-CFLAGS+=-pedantic -ansi -std=c99 -Wall -Wextra
+CFLAGS=-DVERSION=$(VERSION)
+#CFLAGS+=$(shell dpkg-buildflags --get CFLAGS)
+CFLAGS+=-pedantic -std=c99 -Wall -Wextra
 CFLAGS+=$(shell pkg-config --cflags libwnck-1.0) $(shell pkg-config --cflags ${LVER})
 
 
@@ -45,11 +53,14 @@ LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS)
 LDFLAGS+=$(shell pkg-config --libs libwnck-1.0) $(shell pkg-config --libs ${LVER})
 
 
-#
-#  Build the application.
-#
-kpie: kpie.c bindings.c Makefile
-	gcc -o kpie kpie.c bindings.c -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS)
+
+SOURCES := $(wildcard *.c)
+OBJECTS := $(SOURCES:%.c=%.o)
+
+
+kpie: $(OBJECTS)
+	$(LINKER) $@ $(LFLAGS) $(OBJECTS) $(CFLAGS) $(LDFLAGS)
+
 
 
 indent:
@@ -59,5 +70,5 @@ indent:
 #  Clean
 #
 clean:
-	rm kpie || true
+	rm kpie *.o || true
 	find . -name '*~' -delete || true
