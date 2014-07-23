@@ -65,11 +65,11 @@ WnckWindow *g_window;
  *   2. Invoke the lua callback.
  *
  */
-static void on_window_opened (WnckScreen *screen, WnckWindow *window, gpointer    data)
+void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data)
 {
 
-    (void)(screen);
-    (void)(data);
+    (void) (screen);
+    (void) (data);
 
     /**
      * Update the global "current window" to point to the current
@@ -88,7 +88,7 @@ static void on_window_opened (WnckScreen *screen, WnckWindow *window, gpointer  
 /**
  * Entry point to our code.
  */
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
    /**
     * The Lua configuration file we parse/use.
@@ -99,8 +99,8 @@ int main (int argc, char **argv)
     /**
      * Setup our default configuration file.
      */
-    if ( getenv( "HOME" ) != NULL )
-        config_file = g_strdup_printf( "%s/.kpie.lua", getenv( "HOME" ) );
+    if (getenv("HOME") != NULL)
+        config_file = g_strdup_printf("%s/.kpie.lua", getenv("HOME"));
     else
         config_file = "";
 
@@ -108,7 +108,7 @@ int main (int argc, char **argv)
     /**
      * Command-line flags;
      */
-    int debug  = 0;
+    int debug = 0;
     int single = 0;
 
 
@@ -117,14 +117,13 @@ int main (int argc, char **argv)
      */
     while (1)
     {
-        static struct option long_options[] =
-            {
-                {"debug",  no_argument, 0, 'd'},
-                {"single", no_argument, 0, 's'},
-                {"config", required_argument, 0, 'c'},
-                {"version", no_argument, 0, 'v'},
-                {0, 0, 0, 0}
-            };
+        static struct option long_options[] = {
+            {"debug", no_argument, 0, 'd'},
+            {"single", no_argument, 0, 's'},
+            {"config", required_argument, 0, 'c'},
+            {"version", no_argument, 0, 'v'},
+            {0, 0, 0, 0}
+        };
 
         char c;
 
@@ -143,18 +142,18 @@ int main (int argc, char **argv)
             debug = TRUE;
             break;
         case 'c':
-            g_free( config_file );
-            config_file = g_strdup( optarg );
+            g_free(config_file);
+            config_file = g_strdup(optarg);
             break;
         case 's':
             single = TRUE;
             break;
         case 'v':
-            printf( "kpie - %.1f", VERSION );
+            printf("kpie - %.1f", VERSION);
 #ifdef LUA_VERSION
-            printf( " (built against " LUA_VERSION ")" );
+            printf(" (built against " LUA_VERSION ")");
 #endif
-            printf( "\n");
+            printf("\n");
             exit(0);
             break;
         case '?':
@@ -171,52 +170,52 @@ int main (int argc, char **argv)
     int index;
     for (index = optind; index < argc; index++)
     {
-        g_free( config_file );
-        config_file = g_strdup( argv[index] );
+        g_free(config_file);
+        config_file = g_strdup(argv[index]);
     }
 
 
     /**
      * Show details if we should.
      */
-    if ( debug )
-        printf( "Loading configuration file: %s\n", config_file );
+    if (debug)
+        printf("Loading configuration file: %s\n", config_file);
 
-    if ( debug && single )
-        printf( "Single run\n" );
+    if (debug && single)
+        printf("Single run\n");
 
 
 
     /**
      * Initialize Lua.
      */
-    init_lua( debug, config_file  );
+    init_lua(debug, config_file);
 
 
     /**
      * Initialize GDK
      */
-    gdk_init (&argc, &argv);
+    gdk_init(&argc, &argv);
 
 
     /**
      * Get a new loop and the screen.
      */
-    GMainLoop *loop = g_main_loop_new (NULL, FALSE);
-    WnckScreen *screen = wnck_screen_get_default ();
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    WnckScreen *screen = wnck_screen_get_default();
 
 
     /**
      * If we're running just the once, thanks to "--single", then do that.
      * once.
      */
-    if ( single )
+    if (single)
     {
 
         /**
          * Force a sync.
          */
-        wnck_screen_force_update (screen);
+        wnck_screen_force_update(screen);
 
 
         /**
@@ -228,30 +227,30 @@ int main (int argc, char **argv)
         /**
          * For each screen ..
          */
-        for (i=0;i<count;i++)
+        for (i = 0; i < count; i++)
         {
-            WnckScreen *screen=wnck_screen_get(i);
+            WnckScreen *screen = wnck_screen_get(i);
 
             /**
              * Get all windows.
              */
             GList *window_l;
-            for (window_l = wnck_screen_get_windows (screen); window_l != NULL; window_l = window_l->next)
+            for (window_l = wnck_screen_get_windows(screen);
+                 window_l != NULL; window_l = window_l->next)
             {
                 /**
                  * Update the global pointer to the current window.
                  */
-                WnckWindow *w = WNCK_WINDOW (window_l->data);
+                WnckWindow *w = WNCK_WINDOW(window_l->data);
 
                 /**
                  * Invoke our callback.
                  */
-                on_window_opened( screen, w, NULL );
+                on_window_opened(screen, w, NULL);
             }
         }
 
-    }
-    else
+    } else
     {
         /**
          * Count the screens on the system.
@@ -262,21 +261,20 @@ int main (int argc, char **argv)
         /**
          * For each screen.
          */
-        for (i=0;i<count;i++)
+        for (i = 0; i < count; i++)
         {
 
             /**
              * Ensure our callback is invoked when new windows are opened.
              */
-            WnckScreen *screen=wnck_screen_get(i);
-            g_signal_connect (screen, "window-opened",
-                              G_CALLBACK (on_window_opened), NULL);
+            WnckScreen *screen = wnck_screen_get(i);
+            g_signal_connect(screen, "window-opened", G_CALLBACK(on_window_opened), NULL);
         }
 
         /**
          * Launch - NOTE: Never returns.
          */
-        g_main_loop_run (loop);
+        g_main_loop_run(loop);
     }
 
 
@@ -288,10 +286,9 @@ int main (int argc, char **argv)
     /**
      * Cleanup
      */
-    g_main_loop_unref (loop);
+    g_main_loop_unref(loop);
     g_free(config_file);
     close_lua();
 
     return 0;
 }
-

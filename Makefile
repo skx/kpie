@@ -52,6 +52,9 @@ kpie: kpie.c bindings.c Makefile
 	gcc -o kpie kpie.c bindings.c -DVERSION=$(VERSION) $(CFLAGS) $(LDFLAGS)
 
 
+indent:
+	find . \( -name '*.c' -o -name '*.h' \) -exec indent  --braces-after-if-line --no-tabs  --k-and-r-style --line-length 90 --indent-level 4 -bli0 \{\} \;
+
 #
 #  Clean
 #
