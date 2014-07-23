@@ -26,6 +26,7 @@ end
 title = window_title()
 class = window_class()
 app   = window_application()
+type  = window_type()
 
 --
 -- Get the position and size of each window.
@@ -39,6 +40,7 @@ w,h = size()
 --
 print( "if ( ( window_title() == \"" .. title .. "\" ) and " )
 print( "     ( window_class() == \"" .. class .. "\" ) and"  )
+print( "     ( window_type() == \"" .. type .. "\" ) and "  )
 print( "     ( window_application() == \"" .. app .. "\" ) ) then"  )
 print( "     xy(" .. x .. "," .. y .. " )" )
 print( "     size(" .. w .. "," .. h .. " )" )
