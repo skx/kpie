@@ -164,6 +164,10 @@ The following primitives are available:
 * Misc
   * `focus` - Focus the window.
   * `kill` - Close the window, forcibly.
+  * `exists` - Does the given file/directory exist?
+    * See [samples/includes.lua](samples/includes.lua)
+  * `readdir` - Read the contents of a directory.
+      * See [samples/includes.lua](samples/includes.lua)
 * Variables
   * `DEBUG` will be declared as a boolean false value, unless you launch `kpie` with the `--debug` flag.
     * This can be used to control whether you output debugging information.
