@@ -112,6 +112,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(L, "exists", lua_exists);
     lua_register(L, "focus", lua_focus);
     lua_register(L, "fullscreen", lua_fullscreen);
+    lua_register(L, "is_focussed", lua_is_focussed);
     lua_register(L, "is_fullscreen", lua_is_fullscreen);
     lua_register(L, "is_maximized", lua_is_maximized);
     lua_register(L, "is_minimized", lua_is_minimized);
@@ -326,6 +327,23 @@ int lua_fullscreen(lua_State * L)
     return 0;
 }
 
+
+/**
+ * Is the window active?
+ */
+int lua_is_focussed(lua_State * L)
+{
+    WnckScreen *screen = wnck_window_get_screen(g_window);
+    WnckWindow *cur = wnck_screen_get_active_window(screen);
+
+    if (cur == g_window )
+        lua_pushboolean(L, 1);
+    else
+        lua_pushboolean(L, 0);
+    return 1;
+    wnck_window_activate(g_window, 0);
+    return 0;
+}
 
 /**
  * Is the window fullscreen?

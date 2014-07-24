@@ -61,4 +61,8 @@ if ( is_fullscreen() ) then
    print( "     fullscreen()" );
 end
 
+if ( is_focussed() ) then
+   print( "     focus()" );
+end
+
 print("end" )

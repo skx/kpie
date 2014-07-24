@@ -60,6 +60,7 @@ int lua_below(lua_State * L);
 int lua_exists(lua_State * L);
 int lua_focus(lua_State * L);
 int lua_fullscreen(lua_State * L);
+int lua_is_focussed(lua_State * L);
 int lua_is_fullscreen(lua_State * L);
 int lua_is_maximized(lua_State * L);
 int lua_is_minimized(lua_State * L);

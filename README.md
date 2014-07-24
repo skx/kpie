@@ -148,6 +148,8 @@ The following primitives are available:
 * Max/Min
   * `maximize` - Maximize the window.
   * `fullscreen` - Make the window "fullscreen".
+  * `focus` - Focus the window.
+  * `is_focussed` - Is the window focussed?
   * `is_maximized` - Is the window maximized?
   * `is_fullscreen` - Is the window fullscreen?
 * Workspace
@@ -162,7 +164,6 @@ The following primitives are available:
     * The return value may be -1 if the window is pinned, or invisible.
   * `workspaces` - Get/set the number of workspaces/virtual-desktops.
 * Misc
-  * `focus` - Focus the window.
   * `kill` - Close the window, forcibly.
   * `exists` - Does the given file/directory exist?
     * See [samples/includes.lua](samples/includes.lua)
