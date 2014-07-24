@@ -218,6 +218,19 @@ void debug(const char *msg)
 }
 
 
+/**
+ * Some of the libwnck operations require a timestamp, for the time
+ * an event was emittied.
+ *
+ * This function returns something suitable.
+ */
+guint32 get_timestamp()
+{
+    GTimeVal timestamp;
+    g_get_current_time(&timestamp);
+    return(timestamp.tv_sec);
+}
+
 
 /**
  **
@@ -268,7 +281,7 @@ int lua_activate_workspace(lua_State * L)
         workspace = wnck_screen_get_workspace(screen, number - 1);
 
         if (workspace)
-            wnck_workspace_activate(workspace, 0);
+            wnck_workspace_activate(workspace, get_timestamp() );
         else
             g_warning("Failed to get workspace %d", number);
     }
@@ -311,7 +324,7 @@ int lua_focus(lua_State * L)
 {
     UNUSED(L);
     debug("focus window");
-    wnck_window_activate(g_window, 0);
+    wnck_window_activate(g_window, get_timestamp() );
     return 0;
 }
 
@@ -341,8 +354,6 @@ int lua_is_focussed(lua_State * L)
     else
         lua_pushboolean(L, 0);
     return 1;
-    wnck_window_activate(g_window, 0);
-    return 0;
 }
 
 /**
@@ -391,7 +402,7 @@ int lua_kill(lua_State * L)
 {
     UNUSED(L);
     debug("kill window");
-    wnck_window_close(g_window, 0);
+    wnck_window_close(g_window, get_timestamp() );
     return (0);
 }
 
@@ -576,7 +587,7 @@ int lua_unminimize(lua_State * L)
 {
     UNUSED(L);
     debug("unminimize window");
-    wnck_window_unminimize(g_window, 0);
+    wnck_window_unminimize(g_window, get_timestamp() );
     return 0;
 }
 
