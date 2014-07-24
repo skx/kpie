@@ -2,3 +2,4 @@ kpie
 debian/kpie.debhelper.log
 debian/kpie.substvars
 debian/files
+*.o
