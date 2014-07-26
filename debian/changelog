@@ -1,3 +1,13 @@
+kpie (0.5-1) unstable; urgency=low
+
+  * Use proper timestamps when sending libwnck events.
+  * Fixed all warnings when compiling via clang.
+  * Broke implementation down into multiple files.
+  * Added `is_focussed()`, `readdir()` and `exists()`.
+  * Added a sample to center windows.
+
+ -- Steve Kemp <steve@steve.org.uk>  Sat, 26 Jul 2014 15:30:59 +0000
+
 kpie (0.4-1) unstable; urgency=low
 
   * Added more debugging-output.
