@@ -1,0 +1,26 @@
+.TH kpie 1 "" ""
+.SH NAME
+kpie - A window-manipulation utility, with Lua scripting.
+.SH Description
+.B kpie
+is a program that invokes a global Lua script whenever a window upon
+your desktop is opened.
+.TP
+It is designed to allow you to automatically move, size, and manipulate windows as you launch applications.
+.SH Options
+.IP "--version"
+Displays the version of the current release.
+.IP "--config kpie.lua"
+Specify the Lua script to invoke when new windows are created, if not specified
+.B ~/.kpie.lua
+is assumed.
+.IP "--debug"
+Enable the output of debug messages, primarily when operations are carried out.
+.IP "--single"
+Process all existing windows, then exit.  (i.e. Don't keep waiting for future creation-events.)
+.SH Lua Scripting
+.TP
+The release contains documentation of all the supported primitives, in the file README.md, and you should see examples beneath /usr/share/doc/kpie.
+.SH Author
+.B kpie
+was written by Steve Kemp <steve@steve.org.uk>.

@@ -48,6 +48,7 @@ binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installdebconf
+	dh_installman kpie.1
 	dh_installdocs FAQ.md README.md
 	dh_installchangelogs
 	dh_installexamples kpie.lua samples/*.lua
