@@ -159,11 +159,9 @@ int main(int argc, char **argv)
 #endif
             printf("\n");
             return(0);
-            break;
         case '?':
             /* getopt_long already printed an error message. */
             return(1);
-            break;
         }
     }
 
