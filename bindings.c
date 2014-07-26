@@ -720,7 +720,6 @@ int lua_window_type(lua_State * L)
     default:
         g_warning("Unknown window-type");
         return 0;
-        break;
     };
     return 1;
 }
@@ -758,7 +757,6 @@ int lua_workspace(lua_State * L)
             debug(x);
             g_free(x);
 
-            WnckScreen *screen;
             WnckWorkspace *workspace;
 
             screen = wnck_window_get_screen(g_window);
