@@ -1,0 +1,34 @@
+_kpie()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    opts="--version --single --config --debug"
+
+    # Show arguments
+    if [[ ${cur} == -* ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
+
+    #
+    # If the previous argument is empty, or was --config
+    # then complete on filenames too.
+    #
+    case "${prev}" in
+	--config)
+	    COMPREPLY=( $(compgen -f ${cur}) )
+            return 0
+            ;;
+	*)
+	    COMPREPLY=( $(compgen -f ${cur}) )
+            return 0
+            ;;
+    esac
+
+    return 0
+
+}
+complete -F _kpie kpie
