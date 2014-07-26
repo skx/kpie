@@ -202,8 +202,6 @@ int main(int argc, char **argv)
      * Get a new loop and the screen.
      */
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    WnckScreen *screen = wnck_screen_get_default();
-
 
     /**
      * If we're running just the once, thanks to "--single", then do that.
@@ -215,7 +213,7 @@ int main(int argc, char **argv)
         /**
          * Force a sync.
          */
-        wnck_screen_force_update(screen);
+        wnck_screen_force_update(wnck_screen_get_default());
 
 
         /**
