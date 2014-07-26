@@ -154,11 +154,11 @@ int main(int argc, char **argv)
             printf(" (built against " LUA_VERSION ")");
 #endif
             printf("\n");
-            exit(0);
+            return(0);
             break;
         case '?':
             /* getopt_long already printed an error message. */
-            exit(1);
+            return(1);
             break;
         }
     }
