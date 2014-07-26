@@ -65,7 +65,7 @@ extern WnckWindow *g_window;
  *
  * Private to this compilation unit.
  */
-lua_State *L;
+lua_State *g_L;
 
 
 /**
@@ -99,65 +99,65 @@ void init_lua(int _debug, const char *config_file)
     /**
      * Open Lua, and load the standard libraries.
      */
-    L = lua_open();
-    luaL_openlibs(L);
+    g_L = lua_open();
+    luaL_openlibs(g_L);
 
 
     /**
      * Register our primitives to the Lua environment.
      */
-    lua_register(L, "above", lua_above);
-    lua_register(L, "activate_workspace", lua_activate_workspace);
-    lua_register(L, "below", lua_below);
-    lua_register(L, "exists", lua_exists);
-    lua_register(L, "focus", lua_focus);
-    lua_register(L, "fullscreen", lua_fullscreen);
-    lua_register(L, "is_focussed", lua_is_focussed);
-    lua_register(L, "is_fullscreen", lua_is_fullscreen);
-    lua_register(L, "is_maximized", lua_is_maximized);
-    lua_register(L, "is_minimized", lua_is_minimized);
-    lua_register(L, "kill", lua_kill);
-    lua_register(L, "maximize", lua_maximize);
-    lua_register(L, "minimize", lua_minimize);
-    lua_register(L, "pin", lua_pin);
-    lua_register(L, "readdir", lua_readdir);
-    lua_register(L, "screen_height", lua_screen_height);
-    lua_register(L, "screen_width", lua_screen_width);
-    lua_register(L, "shade", lua_shade);
-    lua_register(L, "size", lua_size);
-    lua_register(L, "unfullscreen", lua_unfullscreen);
-    lua_register(L, "unmaximize", lua_unmaximize);
-    lua_register(L, "unminimize", lua_unminimize);
-    lua_register(L, "unpin", lua_unpin);
-    lua_register(L, "unshade", lua_unshade);
-    lua_register(L, "window_application", lua_window_application);
-    lua_register(L, "window_class", lua_window_class);
-    lua_register(L, "window_id", lua_window_id);
-    lua_register(L, "window_pid", lua_window_pid);
-    lua_register(L, "window_title", lua_window_title);
-    lua_register(L, "window_type", lua_window_type);
-    lua_register(L, "workspace", lua_workspace);
-    lua_register(L, "workspaces", lua_workspaces);
-    lua_register(L, "xy", lua_xy);
+    lua_register(g_L, "above", lua_above);
+    lua_register(g_L, "activate_workspace", lua_activate_workspace);
+    lua_register(g_L, "below", lua_below);
+    lua_register(g_L, "exists", lua_exists);
+    lua_register(g_L, "focus", lua_focus);
+    lua_register(g_L, "fullscreen", lua_fullscreen);
+    lua_register(g_L, "is_focussed", lua_is_focussed);
+    lua_register(g_L, "is_fullscreen", lua_is_fullscreen);
+    lua_register(g_L, "is_maximized", lua_is_maximized);
+    lua_register(g_L, "is_minimized", lua_is_minimized);
+    lua_register(g_L, "kill", lua_kill);
+    lua_register(g_L, "maximize", lua_maximize);
+    lua_register(g_L, "minimize", lua_minimize);
+    lua_register(g_L, "pin", lua_pin);
+    lua_register(g_L, "readdir", lua_readdir);
+    lua_register(g_L, "screen_height", lua_screen_height);
+    lua_register(g_L, "screen_width", lua_screen_width);
+    lua_register(g_L, "shade", lua_shade);
+    lua_register(g_L, "size", lua_size);
+    lua_register(g_L, "unfullscreen", lua_unfullscreen);
+    lua_register(g_L, "unmaximize", lua_unmaximize);
+    lua_register(g_L, "unminimize", lua_unminimize);
+    lua_register(g_L, "unpin", lua_unpin);
+    lua_register(g_L, "unshade", lua_unshade);
+    lua_register(g_L, "window_application", lua_window_application);
+    lua_register(g_L, "window_class", lua_window_class);
+    lua_register(g_L, "window_id", lua_window_id);
+    lua_register(g_L, "window_pid", lua_window_pid);
+    lua_register(g_L, "window_title", lua_window_title);
+    lua_register(g_L, "window_type", lua_window_type);
+    lua_register(g_L, "workspace", lua_workspace);
+    lua_register(g_L, "workspaces", lua_workspaces);
+    lua_register(g_L, "xy", lua_xy);
 
     /**
      * Set the value DEBUG to be true/false depending on how we were
      * invoked.
      */
     if (_debug)
-        lua_pushboolean(L, 1);
+        lua_pushboolean(g_L, 1);
     else
-        lua_pushboolean(L, 0);
-    lua_setglobal(L, "DEBUG");
+        lua_pushboolean(g_L, 0);
+    lua_setglobal(g_L, "DEBUG");
 
 
     /**
      * Set the global variables VERSION and CONFIG.
      */
-    lua_pushstring(L, config_file);
-    lua_setglobal(L, "CONFIG");
-    lua_pushnumber(L, VERSION);
-    lua_setglobal(L, "VERSION");
+    lua_pushstring(g_L, config_file);
+    lua_setglobal(g_L, "CONFIG");
+    lua_pushnumber(g_L, VERSION);
+    lua_setglobal(g_L, "VERSION");
 
     /**
      * Save the constructor paramaters.
@@ -180,15 +180,15 @@ void invoke_lua()
     if (stat(g_config, &sb) < 0)
         return;
 
-    int error = luaL_dofile(L, g_config);
+    int error = luaL_dofile(g_L, g_config);
 
     if (error)
     {
-        if (!lua_isstring(L, lua_gettop(L)))
+        if (!lua_isstring(g_L, lua_gettop(g_L)))
             printf("ERROR: no detail found\n");
 
-        const char *str = lua_tostring(L, lua_gettop(L));
-        lua_pop(L, 1);
+        const char *str = lua_tostring(g_L, lua_gettop(g_L));
+        lua_pop(g_L, 1);
 
         printf("ERROR: %s\n", str);
         exit(1);
@@ -201,7 +201,9 @@ void invoke_lua()
  */
 void close_lua()
 {
-    lua_close(L);
+    lua_close(g_L);
+    g_L = NULL;
+
     if (g_config != NULL)
         free(g_config);
     g_config = NULL;
@@ -228,7 +230,7 @@ guint32 get_timestamp()
 {
     GTimeVal timestamp;
     g_get_current_time(&timestamp);
-    return(timestamp.tv_sec);
+    return ( (guint32) timestamp.tv_sec);
 }
 
 
@@ -257,7 +259,7 @@ int lua_above(lua_State * L)
  */
 int lua_activate_workspace(lua_State * L)
 {
-    int number = luaL_checknumber(L, 1);
+    int number = (int)luaL_checknumber(L, 1);
 
     /**
      * Get the count of workspaces.
@@ -274,14 +276,13 @@ int lua_activate_workspace(lua_State * L)
         debug(x);
         g_free(x);
 
-        WnckScreen *screen;
         WnckWorkspace *workspace;
 
         screen = wnck_window_get_screen(g_window);
         workspace = wnck_screen_get_workspace(screen, number - 1);
 
         if (workspace)
-            wnck_workspace_activate(workspace, get_timestamp() );
+            wnck_workspace_activate(workspace, get_timestamp());
         else
             g_warning("Failed to get workspace %d", number);
     }
@@ -324,7 +325,7 @@ int lua_focus(lua_State * L)
 {
     UNUSED(L);
     debug("focus window");
-    wnck_window_activate(g_window, get_timestamp() );
+    wnck_window_activate(g_window, get_timestamp());
     return 0;
 }
 
@@ -349,7 +350,7 @@ int lua_is_focussed(lua_State * L)
     WnckScreen *screen = wnck_window_get_screen(g_window);
     WnckWindow *cur = wnck_screen_get_active_window(screen);
 
-    if (cur == g_window )
+    if (cur == g_window)
         lua_pushboolean(L, 1);
     else
         lua_pushboolean(L, 0);
@@ -402,7 +403,7 @@ int lua_kill(lua_State * L)
 {
     UNUSED(L);
     debug("kill window");
-    wnck_window_close(g_window, get_timestamp() );
+    wnck_window_close(g_window, get_timestamp());
     return (0);
 }
 
@@ -530,8 +531,8 @@ int lua_size(lua_State * L)
      */
     if (top > 0)
     {
-        int h = luaL_checknumber(L, 1);
-        int w = luaL_checknumber(L, 2);
+        int h = (int)luaL_checknumber(L, 1);
+        int w = (int)luaL_checknumber(L, 2);
 
 
         char *x = g_strdup_printf("size(%d,%d);", h, w);
@@ -587,7 +588,7 @@ int lua_unminimize(lua_State * L)
 {
     UNUSED(L);
     debug("unminimize window");
-    wnck_window_unminimize(g_window, get_timestamp() );
+    wnck_window_unminimize(g_window, get_timestamp());
     return 0;
 }
 
@@ -719,7 +720,6 @@ int lua_window_type(lua_State * L)
     default:
         g_warning("Unknown window-type");
         return 0;
-        break;
     };
     return 1;
 }
@@ -738,7 +738,7 @@ int lua_workspace(lua_State * L)
      */
     if (top > 0)
     {
-        int number = luaL_checknumber(L, 1);
+        int number = (int)luaL_checknumber(L, 1);
 
 
         /**
@@ -757,7 +757,6 @@ int lua_workspace(lua_State * L)
             debug(x);
             g_free(x);
 
-            WnckScreen *screen;
             WnckWorkspace *workspace;
 
             screen = wnck_window_get_screen(g_window);
@@ -797,7 +796,7 @@ int lua_workspaces(lua_State * L)
      */
     if (top > 0)
     {
-        int newcount = luaL_checknumber(L, 1);
+        int newcount = (int)luaL_checknumber(L, 1);
         wnck_screen_change_workspace_count(screen, newcount);
     }
 
@@ -819,8 +818,8 @@ int lua_xy(lua_State * L)
      */
     if (top > 0)
     {
-        int newx = luaL_checknumber(L, 1);
-        int newy = luaL_checknumber(L, 2);
+        int newx = (int)luaL_checknumber(L, 1);
+        int newy = (int)luaL_checknumber(L, 2);
 
 
         char *x = g_strdup_printf("xy(%d,%d);", newx, newy);

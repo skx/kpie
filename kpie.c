@@ -64,7 +64,11 @@ WnckWindow *g_window;
  *
  *   2. Invoke the lua callback.
  *
+ * The prototype is here to avoid the warning from clang, which is
+ * a surprise.
+ *
  */
+void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data);
 void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data)
 {
 
@@ -154,12 +158,10 @@ int main(int argc, char **argv)
             printf(" (built against " LUA_VERSION ")");
 #endif
             printf("\n");
-            exit(0);
-            break;
+            return(0);
         case '?':
             /* getopt_long already printed an error message. */
-            exit(1);
-            break;
+            return(1);
         }
     }
 
@@ -202,8 +204,6 @@ int main(int argc, char **argv)
      * Get a new loop and the screen.
      */
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    WnckScreen *screen = wnck_screen_get_default();
-
 
     /**
      * If we're running just the once, thanks to "--single", then do that.
@@ -215,7 +215,7 @@ int main(int argc, char **argv)
         /**
          * Force a sync.
          */
-        wnck_screen_force_update(screen);
+        wnck_screen_force_update(wnck_screen_get_default());
 
 
         /**
