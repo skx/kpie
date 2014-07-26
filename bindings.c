@@ -188,7 +188,7 @@ void invoke_lua()
             printf("ERROR: no detail found\n");
 
         const char *str = lua_tostring(g_L, lua_gettop(g_L));
-        lua_pop(L, 1);
+        lua_pop(g_L, 1);
 
         printf("ERROR: %s\n", str);
         exit(1);
