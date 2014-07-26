@@ -2,7 +2,7 @@
 Why the name KPie?
 ------------------
 
-Based on the obvious simularity to devilspie I wanted to call
+Based on the obvious similarity to devilspie I wanted to call
 this tool cherrypie, which is my favourite kind of pie.
 
 The name seemed a little dodgy though so I chose kpie, via the
@@ -16,7 +16,7 @@ You can include other Lua files by use of the `dofile` primitive:
 
      dofile( "test.lua" )
 
-However this does not allow you to test for a files existance, or handle
+However this does not allow you to test for a files existence, or handle
 cases such as "include ~/.config/*.lua" - for that see the next question.
 
 
@@ -24,7 +24,7 @@ cases such as "include ~/.config/*.lua" - for that see the next question.
 How can I handle wildcards?
 ---------------------------
 
-`kpie` contains a `readdir` primitive to allow you to read a directorys
+`kpie` contains a `readdir` primitive to allow you to read a directories
 contents.  There is also an `exists` primitive which will let you test
 a file/directory exists.
 
