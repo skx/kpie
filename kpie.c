@@ -64,7 +64,11 @@ WnckWindow *g_window;
  *
  *   2. Invoke the lua callback.
  *
+ * The prototype is here to avoid the warning from clang, which is
+ * a surprise.
+ *
  */
+void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data);
 void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data)
 {
 
