@@ -148,7 +148,7 @@ void init_lua(int _debug, const char *config_file)
         lua_pushboolean(g_L, 1);
     else
         lua_pushboolean(g_L, 0);
-    lua_setglobal(L, "DEBUG");
+    lua_setglobal(g_L, "DEBUG");
 
 
     /**
@@ -230,7 +230,7 @@ guint32 get_timestamp()
 {
     GTimeVal timestamp;
     g_get_current_time(&timestamp);
-    return (timestamp.tv_sec);
+    return ( (guint32) timestamp.tv_sec);
 }
 
 
@@ -276,7 +276,6 @@ int lua_activate_workspace(lua_State * L)
         debug(x);
         g_free(x);
 
-        WnckScreen *screen;
         WnckWorkspace *workspace;
 
         screen = wnck_window_get_screen(g_window);
