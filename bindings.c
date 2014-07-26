@@ -265,7 +265,7 @@ int lua_activate_workspace(lua_State * L)
     WnckScreen *screen = wnck_window_get_screen(g_window);
     int count = wnck_screen_get_workspace_count(screen);
 
-    if (number < 0 || number > count)
+    if (number < 1 || number > count)
     {
         g_warning("Workspace number out of bounds: %d", number);
     } else
@@ -747,7 +747,7 @@ int lua_workspace(lua_State * L)
         WnckScreen *screen = wnck_window_get_screen(g_window);
         int count = wnck_screen_get_workspace_count(screen);
 
-        if (number < 0 || number > count)
+        if (number < 1 || number > count)
         {
             g_warning("Workspace number out of bounds: %d", number);
         } else
