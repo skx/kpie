@@ -3,7 +3,7 @@ Section: gnome
 Priority: optional
 Maintainer: Steve Kemp <steve@steve.org.uk>
 Build-Depends: debhelper (>= 7), libglib2.0-dev (>= 2.10), libgtk2.0-dev, libwnck-dev (>= 2.12), libx11-dev, liblua5.1-0-dev, pkg-config
-Standards-Version: 3.9.2
+Standards-Version: 3.9.4
 Homepage: http://github.com/skx/kpie/
 
 Package: kpie
