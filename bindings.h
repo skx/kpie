@@ -34,6 +34,12 @@ void init_lua(int _debug, const char *config_file);
 
 
 /**
+ * Call the users lua file.
+ */
+void invoke_lua();
+
+
+/**
  * Teardown.
  */
 void close_lua();
@@ -43,6 +49,13 @@ void close_lua();
  * Invoke the given Lua script, if it exists.
  */
 void invoke_lua();
+
+
+/**
+ * Utility functions.
+ */
+void debug(const char *msg);
+guint32 get_timestamp();
 
 
 
