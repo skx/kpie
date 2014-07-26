@@ -158,10 +158,10 @@ int main(int argc, char **argv)
             printf(" (built against " LUA_VERSION ")");
 #endif
             printf("\n");
-            return(0);
+            return (0);
         case '?':
             /* getopt_long already printed an error message. */
-            return(1);
+            return (1);
         }
     }
 

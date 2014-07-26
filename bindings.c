@@ -230,7 +230,7 @@ guint32 get_timestamp()
 {
     GTimeVal timestamp;
     g_get_current_time(&timestamp);
-    return ( (guint32) timestamp.tv_sec);
+    return ((guint32) timestamp.tv_sec);
 }
 
 
@@ -259,7 +259,7 @@ int lua_above(lua_State * L)
  */
 int lua_activate_workspace(lua_State * L)
 {
-    int number = (int)luaL_checknumber(L, 1);
+    int number = (int) luaL_checknumber(L, 1);
 
     /**
      * Get the count of workspaces.
@@ -531,8 +531,8 @@ int lua_size(lua_State * L)
      */
     if (top > 0)
     {
-        int h = (int)luaL_checknumber(L, 1);
-        int w = (int)luaL_checknumber(L, 2);
+        int h = (int) luaL_checknumber(L, 1);
+        int w = (int) luaL_checknumber(L, 2);
 
 
         char *x = g_strdup_printf("size(%d,%d);", h, w);
@@ -738,7 +738,7 @@ int lua_workspace(lua_State * L)
      */
     if (top > 0)
     {
-        int number = (int)luaL_checknumber(L, 1);
+        int number = (int) luaL_checknumber(L, 1);
 
 
         /**
@@ -796,7 +796,7 @@ int lua_workspaces(lua_State * L)
      */
     if (top > 0)
     {
-        int newcount = (int)luaL_checknumber(L, 1);
+        int newcount = (int) luaL_checknumber(L, 1);
         wnck_screen_change_workspace_count(screen, newcount);
     }
 
@@ -818,8 +818,8 @@ int lua_xy(lua_State * L)
      */
     if (top > 0)
     {
-        int newx = (int)luaL_checknumber(L, 1);
-        int newy = (int)luaL_checknumber(L, 2);
+        int newx = (int) luaL_checknumber(L, 1);
+        int newy = (int) luaL_checknumber(L, 2);
 
 
         char *x = g_strdup_printf("xy(%d,%d);", newx, newy);
