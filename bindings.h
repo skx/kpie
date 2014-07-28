@@ -81,6 +81,7 @@ int lua_kill(lua_State * L);
 int lua_maximize(lua_State * L);
 int lua_minimize(lua_State * L);
 int lua_pin(lua_State * L);
+int lua_pointer(lua_State *L);
 int lua_readdir(lua_State * L);
 int lua_screen_height(lua_State * L);
 int lua_screen_width(lua_State * L);

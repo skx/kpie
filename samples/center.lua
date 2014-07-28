@@ -25,6 +25,11 @@ function center()
 
    xy(newx,newy)
 
+   --
+   -- Move the pointer to the middle of the window
+   --
+   pointer( sx/2, sy/2);
+
    if ( DEBUG ) then
       print( "Moving to " .. newx .. "," .. newy )
    end

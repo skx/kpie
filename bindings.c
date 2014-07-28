@@ -120,6 +120,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "maximize", lua_maximize);
     lua_register(g_L, "minimize", lua_minimize);
     lua_register(g_L, "pin", lua_pin);
+    lua_register(g_L, "pointer", lua_pointer);
     lua_register(g_L, "readdir", lua_readdir);
     lua_register(g_L, "screen_height", lua_screen_height);
     lua_register(g_L, "screen_width", lua_screen_width);
@@ -441,6 +442,43 @@ int lua_pin(lua_State * L)
     debug("pin window");
     wnck_window_pin(g_window);
     return 0;
+}
+
+
+/**
+ * Get/Set the mouse-pointer position.
+ */
+int lua_pointer(lua_State *L)
+{
+    int top = lua_gettop(L);
+
+    int x, y;
+
+    GdkDisplay *display = NULL;
+    GdkScreen *screen = NULL;
+
+    /* get default display and screen */
+    display = gdk_display_get_default ();
+    screen = gdk_display_get_default_screen (display);
+
+    /**
+     * Set the value?
+     */
+    if (top > 0)
+    {
+        x = (int) luaL_checknumber(L, 1);
+        y = (int) luaL_checknumber(L, 2);
+
+        gdk_display_warp_pointer (display, screen, x, y);
+    }
+
+
+    /* get cursor position */
+    gdk_display_get_pointer (display, NULL, &x, &y, NULL);
+
+    lua_pushinteger(L, x);
+    lua_pushinteger(L, y);
+    return 2;
 }
 
 

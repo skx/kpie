@@ -167,6 +167,7 @@ The following primitives are available:
   * `kill` - Close the window, forcibly.
   * `exists` - Does the given file/directory exist?
     * See [samples/includes.lua](samples/includes.lua)
+  * `pointer` - Get/Set the position of the mouse pointer.
   * `readdir` - Read the contents of a directory.
       * See [samples/includes.lua](samples/includes.lua)
 * Variables
