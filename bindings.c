@@ -223,7 +223,7 @@ void debug(const char *msg)
 
 /**
  * Some of the libwnck operations require a timestamp, for the time
- * an event was emittied.
+ * an event was emitted.
  *
  * This function returns something suitable.
  */
