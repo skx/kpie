@@ -161,7 +161,7 @@ void init_lua(int _debug, const char *config_file)
     lua_setglobal(g_L, "VERSION");
 
     /**
-     * Save the constructor paramaters.
+     * Save the constructor parameters.
      */
     g_config = g_strdup(config_file);
     g_debug = _debug;
@@ -198,7 +198,7 @@ void invoke_lua()
 
 
 /**
- * Close our Lua interpretter.
+ * Close our Lua interpreter.
  */
 void close_lua()
 {
@@ -608,7 +608,7 @@ int lua_unfullscreen(lua_State * L)
 
 
 /**
- * UnMaximize the current window.
+ * Unmaximize the current window.
  */
 int lua_unmaximize(lua_State * L)
 {
