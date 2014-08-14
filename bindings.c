@@ -118,6 +118,8 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "is_minimized", lua_is_minimized);
     lua_register(g_L, "kill", lua_kill);
     lua_register(g_L, "maximize", lua_maximize);
+    lua_register(g_L, "maximize_horizontally", lua_maximize_horizontally);
+    lua_register(g_L, "maximize_vertically", lua_maximize_vertically);
     lua_register(g_L, "minimize", lua_minimize);
     lua_register(g_L, "pin", lua_pin);
     lua_register(g_L, "pointer", lua_pointer);
@@ -420,6 +422,27 @@ int lua_maximize(lua_State * L)
     return 0;
 }
 
+/**
+ * Maximize the current window horizontally.
+ */
+int lua_maximize_horizontally(lua_State * L)
+{
+    UNUSED(L);
+    debug("maximizing window horizontally");
+    wnck_window_maximize_horizontally(g_window);
+    return 0;
+}
+
+/**
+ * Maximize the current window vertically.
+ */
+int lua_maximize_vertically(lua_State * L)
+{
+    UNUSED(L);
+    debug("maximizing window vertically");
+    wnck_window_maximize_vertically(g_window);
+    return 0;
+}
 
 /**
  * Minimize the current window.
