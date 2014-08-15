@@ -147,6 +147,8 @@ The following primitives are available:
   * `below` - Remove the "always on top" flag.
 * Max/Min
   * `maximize` - Maximize the window.
+  * `maximize_horizontally - Maximize horizontally.
+  * `maximize_vertically - Maximize vertically.
   * `fullscreen` - Make the window "fullscreen".
   * `focus` - Focus the window.
   * `is_focussed` - Is the window focussed?
