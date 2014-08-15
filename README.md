@@ -121,10 +121,6 @@ With the dependencies in-place you should be able to compile
 the binary by simply running `make`.
 
 
-Command Line Options
---------------------
-
-
 Primitives
 ----------
 
