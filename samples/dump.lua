@@ -25,6 +25,7 @@ end
 --
 title = window_title()
 class = window_class()
+role  = window_role()
 app   = window_application()
 type  = window_type()
 
@@ -41,6 +42,7 @@ w,h = size()
 print( "if ( ( window_title() == \"" .. title .. "\" ) and " )
 print( "     ( window_class() == \"" .. class .. "\" ) and"  )
 print( "     ( window_type() == \"" .. type .. "\" ) and "  )
+print( "     ( window_role() == \"" .. role .. "\" ) and "  )
 print( "     ( window_application() == \"" .. app .. "\" ) ) then"  )
 print( "     xy(" .. x .. "," .. y .. " )" )
 print( "     size(" .. w .. "," .. h .. " )" )

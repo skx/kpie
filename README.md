@@ -136,6 +136,8 @@ The following primitives are available:
      * This may be empty.
   * `window_pid` - Get the PID of the new window.
      * This may be zero on error.
+  * `window_role` - Get the role of the new window, via `WM_WINDOW_ROLE`.
+     * This may return an empty string.
   * `screen_height` - Get the size of the screen.
   * `screen_width` - Get the size of the screen.
 * Depth

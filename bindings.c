@@ -24,6 +24,11 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+#include <X11/Xatom.h>
+
+
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 #include <libwnck/libwnck.h>
 
@@ -137,6 +142,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "window_class", lua_window_class);
     lua_register(g_L, "window_id", lua_window_id);
     lua_register(g_L, "window_pid", lua_window_pid);
+    lua_register(g_L, "window_role", lua_window_role);
     lua_register(g_L, "window_title", lua_window_title);
     lua_register(g_L, "window_type", lua_window_type);
     lua_register(g_L, "workspace", lua_workspace);
@@ -731,6 +737,51 @@ int lua_window_pid(lua_State * L)
         g_warning("Failed to find PID");
         lua_pushinteger(L, 0);
     }
+    return 1;
+}
+
+
+/**
+ * Return the role of this window.
+ */
+int lua_window_role(lua_State * L)
+{
+    /**
+     * Get the atom to get the property.
+     */
+    Atom a = XInternAtom (gdk_x11_get_default_xdisplay(), "WM_WINDOW_ROLE", FALSE);
+    if ( a == None)
+    {
+        lua_pushstring(L, "");
+        return 1;
+    }
+
+    Atom type;
+    int format;
+    gulong nitems;
+    gulong bytes_after;
+    unsigned char *property;
+
+    /**
+     * Now get the property.
+     */
+    XGetWindowProperty (gdk_x11_get_default_xdisplay (),
+                        wnck_window_get_xid(g_window), a,
+                        0, G_MAXLONG,
+                        False, AnyPropertyType, &type,
+                        &format, &nitems,
+                        &bytes_after, &property);
+
+    if (type == XA_STRING)
+    {
+        /**
+         * Success.
+         */
+        lua_pushstring(L,((char*)property));
+        return 1;
+    }
+
+    lua_pushstring(L, "");
     return 1;
 }
 
