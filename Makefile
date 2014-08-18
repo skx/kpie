@@ -2,7 +2,7 @@
 #
 #  Our version number
 #
-VERSION=0.5
+VERSION=0.6
 
 #
 # The version of Lua we build against.

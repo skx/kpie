@@ -1,3 +1,9 @@
+kpie (0.6-1) unstable; urgency=low
+
+ * Add support for `window_role()`.
+
+ -- Steve Kemp <steve@steve.org.uk>  Mon, 18 Aug 2014 13:20:40 +0000
+
 kpie (0.5-1) unstable; urgency=low
 
   * Use proper timestamps when sending libwnck events.
