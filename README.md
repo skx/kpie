@@ -6,7 +6,9 @@ with a Lua-based configuration file.
 
 Usage is:
 
-     kpie [options] [lua-config-file.lua]
+```sh
+kpie [options] [lua-config-file.lua]
+```
 
 Options are currently limited to:
 
@@ -30,7 +32,9 @@ you terminate `kpie`.
 By default `kpie` looks for `~/.kpie.lua`, but you may choose another
 file when you start `kpie` via:
 
-    $ kpie ~/.config/kpie.lua
+```sh
+$ kpie ~/.config/kpie.lua
+```
 
 As noted the configuration file is Lua with the addition of some
 window-related primitives.  To give you a flavour this is a sample
@@ -72,7 +76,9 @@ point if you wish to script the manipulation of your windows.
 
 Simply run:
 
-    $ ./kpie ./samples/dump.lua
+```sh
+$ ./kpie ./samples/dump.lua
+```
 
 This will output chunks of config which you can edit or save:
 
@@ -115,7 +121,9 @@ you'll need:
 
 Upon a Debian GNU/Linux system these may be installed via:
 
-      sudo apt-get install libwnck-dev liblua5.1-0-dev
+```sh
+sudo apt-get install libwnck-dev liblua5.1-0-dev
+```
 
 With the dependencies in-place you should be able to compile
 the binary by simply running `make`.
