@@ -8,8 +8,7 @@
 KPie
 ----
 
-KPie is a simple window manipulation tool, modeled after devil's pie,
-with a Lua-based configuration file.
+KPie is a simple window manipulation tool, modeled after devil's pie, with a Lua-based configuration file.
 
 Usage is:
 
@@ -26,22 +25,15 @@ Options are currently limited to:
 Overview
 --------
 
-A single Lua configuration file will be parsed and executed for every
-window on your system, including invisible windows, and windows in different
-workspaces/virtual-desktops.
+A single Lua configuration file will be parsed and executed for every window on your system, including invisible windows, and windows in different workspaces/virtual-desktops.
 
-Unless you're running `kpie --single` then the configuration file
-will be invoked for each window that is opened in the future, until
-you terminate `kpie`.
+Unless you're running `kpie --single` then the configuration file will be invoked for each window that is opened in the future, until you terminate `kpie`.
 
-By default `kpie` looks for `~/.kpie.lua`, but you may choose another
-file when you start `kpie` via:
+By default `kpie` looks for `~/.kpie.lua`, but you may choose another file when you start `kpie` via:
 
     $ kpie ~/.config/kpie.lua
 
-As noted the configuration file is Lua with the addition of some
-window-related primitives.  To give you a flavour this is a sample
-configuration file:
+As noted the configuration file is Lua with the addition of some window-related primitives.  To give you a flavour this is a sample configuration file:
 
     --
     -- If Xine is launched it should be "always on top"
@@ -60,22 +52,16 @@ configuration file:
 
 **NOTE**: More configuration files are included in the [sample directory](samples/).
 
-The key thing to understand is that the **same** configuration file will be
-invoked for **every** window on your system, on the basis that you'll limit
-your actions to specific windows via the matching options.
+The key thing to understand is that the **same** configuration file will be invoked for **every** window on your system, on the basis that you'll limit your actions to specific windows via the matching options.
 
-For example if you had a configuration file which read merely "`maximize()`"
-your desktop would become very odd, as **all** the windows would be maximized,
-including your panel(s).
+For example if you had a configuration file which read merely "`maximize()`" your desktop would become very odd, as **all** the windows would be maximized, including your panel(s).
 
 
 
 Configuration Generator
 -----------------------
 
-Included within the repository is a sample configuration file,
-[dump.lua](samples/dump.lua), which is designed to be a helpful starting
-point if you wish to script the manipulation of your windows.
+Included within the repository is a sample configuration file, [dump.lua](samples/dump.lua), which is designed to be a helpful starting point if you wish to script the manipulation of your windows.
 
 Simply run:
 
@@ -98,24 +84,19 @@ This will output chunks of config which you can edit or save:
          workspace(2)
     end
 
-As you can see this has iterated over all existing windows, and shown
-you their current state - this is perfect if you wish to reproduce a
-complex layout interactively.
+As you can see this has iterated over all existing windows, and shown you their current state - this is perfect if you wish to reproduce a complex layout interactively.
 
 
 
 Installation
 ------------
 
-You can install binary packages for Debian GNU/Linux from the authors
-repository:
+You can install binary packages for Debian GNU/Linux from the authors repository:
 
 * http://packages.steve.org.uk/kpie/
    * The package will also add an entry to your system-menu at "`System Tools | Preferences | Startup Applications`"
 
-If you prefer to build from source you can do so providing you have the
-dependencies installed.  Beyond the necessities, a compiler and `make`,
-you'll need:
+If you prefer to build from source you can do so providing you have the dependencies installed.  Beyond the necessities, a compiler and `make`, you'll need:
 
 * `libwnck-dev`
 * `liblua5.1-0-dev`
@@ -124,8 +105,7 @@ Upon a Debian GNU/Linux system these may be installed via:
 
       sudo apt-get install libwnck-dev liblua5.1-0-dev
 
-With the dependencies in-place you should be able to compile
-the binary by simply running `make`.
+With the dependencies in-place you should be able to compile the binary by simply running `make`.
 
 
 Primitives
