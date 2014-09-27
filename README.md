@@ -127,19 +127,19 @@ Primitives
 The following primitives are available:
 
 * Information
-   * `window_title` - Get the title of the new window.
-   * `window_type` - Get the type of the window.
-      * `"WINDOW_NORMAL"`, `"WINDOW_TOOLBAR"`, etc.
-   * `window_application` - Get the application which created the window.
-   * `window_class` - Get the class of the new window.
-   * `window_id` - Get the ID of the new window.
-      * This may be empty.
-   * `window_pid` - Get the PID of the new window.
-      * This may be zero on error.
-   * `window_role` - Get the role of the new window, via `WM_WINDOW_ROLE`.
-      * This may return an empty string.
-   * `screen_height` - Get the size of the screen.
-   * `screen_width` - Get the size of the screen.
+    * `window_title` - Get the title of the new window.
+    * `window_type` - Get the type of the window.
+        * `"WINDOW_NORMAL"`, `"WINDOW_TOOLBAR"`, etc.
+    * `window_application` - Get the application which created the window.
+    * `window_class` - Get the class of the new window.
+    * `window_id` - Get the ID of the new window.
+        * This may be empty.
+    * `window_pid` - Get the PID of the new window.
+        * This may be zero on error.
+    * `window_role` - Get the role of the new window, via `WM_WINDOW_ROLE`.
+        * This may return an empty string.
+    * `screen_height` - Get the size of the screen.
+    * `screen_width` - Get the size of the screen.
 * Depth
    * `above` - Make the window "always on top".
    * `below` - Remove the "always on top" flag.
