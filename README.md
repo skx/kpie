@@ -50,7 +50,7 @@ As noted the configuration file is Lua with the addition of some window-related 
         pin()
     end
 
-**NOTE**: More configuration files are included in the [sample directory](tree/master/samples).
+**NOTE**: More configuration files are included in the sample directory `samples/`.
 
 The key thing to understand is that the **same** configuration file will be invoked for **every** window on your system, on the basis that you'll limit your actions to specific windows via the matching options.
 
@@ -61,7 +61,7 @@ For example if you had a configuration file which read merely "`maximize()`" you
 Configuration Generator
 -----------------------
 
-Included within the repository is a sample configuration file, [dump.lua](tree/master/samples/dump.lua), which is designed to be a helpful starting point if you wish to script the manipulation of your windows.
+Included within the repository is a sample configuration file `samples/dump.lua` which is designed to be a helpful starting point if you wish to script the manipulation of your windows.
 
 Simply run:
 
