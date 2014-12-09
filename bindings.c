@@ -701,7 +701,7 @@ int lua_window_application(lua_State * L)
 int lua_window_class(lua_State * L)
 {
     WnckClassGroup *x = wnck_window_get_class_group(g_window);
-    const char *class = wnck_class_group_get_name(x);
+    const char *class = wnck_class_group_get_res_class(x);
     lua_pushstring(L, class);
     return 1;
 }
