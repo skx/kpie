@@ -51,6 +51,7 @@ binary-indep: build install
 	dh_installman kpie.1
 	dh_installdocs FAQ.md README.md
 	dh_installchangelogs
+	dh_shlibdeps
 	dh_installexamples kpie.lua samples/*.lua
 	dh_installinit
 	dh_compress
