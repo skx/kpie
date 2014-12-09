@@ -1,6 +1,12 @@
+kpie (0.7-1) unstable; urgency=low
+
+  * Updated the return value of `window_class` for compatibility.
+
+ -- Steve Kemp <steve@steve.org.uk>  Tue, 9 Dec 2014 19:15:17 +0000
+
 kpie (0.6-1) unstable; urgency=low
 
- * Add support for `window_role()`.
+  * Add support for `window_role()`.
 
  -- Steve Kemp <steve@steve.org.uk>  Mon, 18 Aug 2014 13:20:40 +0000
 
