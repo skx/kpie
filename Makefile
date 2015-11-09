@@ -22,6 +22,9 @@ endif
 ifeq ($(UNAME),Darwin)
 	LVER=lua #(use lua-52)
 endif
+ifeq ($(UNAME),Linux)
+	LVER=lua
+endif
 
 
 #
@@ -42,7 +45,9 @@ LINKER=$(CC) -o
 CFLAGS=-DVERSION=$(VERSION)
 #CFLAGS+=$(shell dpkg-buildflags --get CFLAGS)
 CFLAGS+=-pedantic -std=c99 -Wall -Wextra
-CFLAGS+=$(shell pkg-config --cflags libwnck-1.0) $(shell pkg-config --cflags ${LVER})
+CFLAGS+=$(shell pkg-config --cflags gdk-3.0)
+CFLAGS+=$(shell pkg-config --cflags libwnck-1.0)
+CFLAGS+=$(shell pkg-config --cflags ${LVER})
 
 
 #
@@ -51,8 +56,10 @@ CFLAGS+=$(shell pkg-config --cflags libwnck-1.0) $(shell pkg-config --cflags ${L
 #  1.  Add Debian hardening flags.
 #  2.  Add libwnck + lua5.1
 #
-LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS)
-LDFLAGS+=$(shell pkg-config --libs libwnck-1.0) $(shell pkg-config --libs ${LVER})
+#LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS)
+LDFLAGS+=$(shell pkg-config --libs gdk-3.0)
+LDFLAGS+=$(shell pkg-config --libs libwnck-1.0)
+LDFLAGS+=$(shell pkg-config --libs ${LVER})
 LDFLAGS+=-lX11
 
 

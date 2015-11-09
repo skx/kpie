@@ -96,14 +96,19 @@ You can install binary packages for Debian GNU/Linux from the authors repository
 * http://packages.steve.org.uk/kpie/
    * The package will also add an entry to your system-menu at "`System Tools | Preferences | Startup Applications`"
 
-If you prefer to build from source you can do so providing you have the dependencies installed.  Beyond the necessities, a compiler and `make`, you'll need:
+If you prefer to build from source you can do so providing you have the dependencies installed.  Beyond the necessities, a compiler and `make`, you'll need development files for:
 
-* `libwnck-dev`
-* `liblua5.1-0-dev`
+* `libwnck-1.0`
+* `liblua5.1`
+* `libgdk`
 
-Upon a Debian GNU/Linux system these may be installed via:
+On a Debian GNU/Linux system these may be installed via:
 
-      sudo apt-get install libwnck-dev liblua5.1-0-dev
+    sudo apt-get install libwnck-dev liblua5.1-0-dev
+
+On an openSUSE 13.2 system these may be installed via:
+
+    sudo zypper install libwnck2-devel lua51-devel gtk3-devel
 
 With the dependencies in-place you should be able to compile the binary by simply running `make`.
 
