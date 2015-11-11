@@ -165,7 +165,7 @@ void init_lua(int _debug, const char *config_file)
      */
     lua_pushstring(g_L, config_file);
     lua_setglobal(g_L, "CONFIG");
-    lua_pushnumber(g_L, VERSION);
+    lua_pushstring(g_L, VERSION);
     lua_setglobal(g_L, "VERSION");
 
     /**
