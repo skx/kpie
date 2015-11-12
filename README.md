@@ -50,7 +50,9 @@ As noted the configuration file is Lua with the addition of some window-related 
         pin()
     end
 
-**NOTE**: More configuration files are included in the sample directory `samples/`.
+The [kpie.lua](kpie.lua) sample configuration file contains this code,
+as well as some more examples of Lua scripting.  You can find more
+specialized example configuration files included in the `samples/` directory.
 
 The key thing to understand is that the **same** configuration file will be invoked for **every** window on your system, on the basis that you'll limit your actions to specific windows via the matching options.
 
