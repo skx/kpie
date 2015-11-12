@@ -98,14 +98,28 @@ You can install binary packages for Debian GNU/Linux from the authors repository
 
 If you prefer to build from source you can do so providing you have the dependencies installed.  Beyond the necessities, a compiler and `make`, you'll need:
 
-* `libwnck-dev`
+* `libglib2.0-dev`
+* `libgtk2.0-dev`
 * `liblua5.1-0-dev`
+* `libwnck-dev`
+* `libx11-dev`
+* `x11proto-core-dev`
 
 Upon a Debian GNU/Linux system these may be installed via:
 
-      sudo apt-get install libwnck-dev liblua5.1-0-dev
+      sudo apt-get install libglib2.0-dev libgtk2.0-dev libwnck-dev libx11-dev liblua5.1-0-dev x11proto-core-dev
 
-With the dependencies in-place you should be able to compile the binary by simply running `make`.
+With the dependencies in-place you should be able to compile the binary by
+running:
+
+     ./configure
+     make
+
+If you're building from a git checkout, rather than a named release, you'll need to run this instead:
+
+     autoreconf --install
+     ./configure
+     make
 
 
 Primitives
