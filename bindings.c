@@ -141,6 +141,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "window_application", lua_window_application);
     lua_register(g_L, "window_class", lua_window_class);
     lua_register(g_L, "window_id", lua_window_id);
+    lua_register(g_L, "window_xid", lua_window_xid);
     lua_register(g_L, "window_pid", lua_window_pid);
     lua_register(g_L, "window_role", lua_window_role);
     lua_register(g_L, "window_title", lua_window_title);
@@ -719,6 +720,23 @@ int lua_window_id(lua_State * L)
     {
         g_warning("Failed to find ID");
         lua_pushstring(L, "");
+    }
+    return 1;
+}
+
+
+/**
+ * Return the PID of the process that created this window.
+ */
+int lua_window_xid(lua_State * L)
+{
+    gulong pid = wnck_window_get_xid(g_window);
+    if (pid)
+        lua_pushinteger(L, pid);
+    else
+    {
+        g_warning("Failed to find XID");
+        lua_pushinteger(L, 0);
     }
     return 1;
 }
