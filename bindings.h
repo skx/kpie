@@ -97,6 +97,7 @@ int lua_unshade(lua_State * L);
 int lua_window_application(lua_State * L);
 int lua_window_class(lua_State * L);
 int lua_window_id(lua_State * L);
+int lua_window_xid(lua_State * L);
 int lua_window_pid(lua_State * L);
 int lua_window_role(lua_State * L);
 int lua_window_title(lua_State * L);
