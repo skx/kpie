@@ -137,6 +137,8 @@ The following primitives are available:
     * `window_class` - Get the class of the new window.
     * `window_id` - Get the ID of the new window.
         * This may be empty.
+    * `window_xid` - Get the XID of the new window.
+        * This may be empty.
     * `window_pid` - Get the PID of the new window.
         * This may be zero on error.
     * `window_role` - Get the role of the new window, via `WM_WINDOW_ROLE`.
