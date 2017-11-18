@@ -1,8 +1,6 @@
 
 * Git Repository:
     * http://github.com/skx/kpie
-* Git mirror:
-    * http://git.steve.org.uk/skx/kpie
 
 
 KPie
