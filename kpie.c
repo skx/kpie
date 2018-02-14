@@ -54,29 +54,6 @@
 WnckWindow *g_window;
 
 
-/**
- * This is an error-handler which is invoked when any of the X11-based
- * primitives recieve an error.
- *
- * This is installed at startup, and its main purpose is to override the
- * default error-handler, which would otherwise terminate the process
- * when an error was raised & caught.
- *
- */
-int x11_error_catcher( Display *disp, XErrorEvent *xe )
-{
-    (void)(disp);
-    (void)(xe);
-
-    printf("An error was caught!\n");
-
-    return 0;
-}
-
-
-
-
-
 
 /**
  * This function is called when a new window is created.
@@ -208,12 +185,6 @@ int main(int argc, char **argv)
 
     if (debug && single)
         printf("Single run\n");
-
-
-    /**
-     * Setup our error-handler.
-     */
-    XSetErrorHandler( x11_error_catcher );
 
     /**
      * Initialize Lua.

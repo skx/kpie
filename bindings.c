@@ -94,6 +94,25 @@ int g_debug;
 
 
 
+/**
+ * This is an error-handler which is invoked when any of the X11-based
+ * primitives recieve an error.
+ *
+ * This is installed at startup, and its main purpose is to override the
+ * default error-handler, which would otherwise terminate the process
+ * when an error was raised & caught.
+ *
+ */
+int x11_error_catcher( Display *disp, XErrorEvent *xe )
+{
+    (void)(disp);
+    (void)(xe);
+
+    printf("An error was caught!\n");
+
+    return 0;
+}
+
 
 
 /**
@@ -764,6 +783,13 @@ int lua_window_pid(lua_State * L)
  */
 int lua_window_role(lua_State * L)
 {
+
+
+    /**
+     * Setup our error-handler.
+     */
+    XSetErrorHandler( x11_error_catcher );
+
     /**
      * Get the atom to get the property.
      */
@@ -771,6 +797,7 @@ int lua_window_role(lua_State * L)
     if ( a == None)
     {
         lua_pushstring(L, "");
+        XSetErrorHandler( NULL );
         return 1;
     }
 
@@ -796,10 +823,12 @@ int lua_window_role(lua_State * L)
          * Success.
          */
         lua_pushstring(L,((char*)property));
+        XSetErrorHandler( NULL );
         return 1;
     }
 
     lua_pushstring(L, "");
+    XSetErrorHandler( NULL );
     return 1;
 }
 
