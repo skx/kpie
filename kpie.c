@@ -28,6 +28,10 @@
 
 #include <getopt.h>
 
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 #include <libwnck/libwnck.h>
 
@@ -49,6 +53,25 @@
  */
 WnckWindow *g_window;
 
+
+/**
+ * This is an error-handler which is invoked when any of the X11-based
+ * primitives recieve an error.
+ *
+ * This is installed at startup, and its main purpose is to override the
+ * default error-handler, which would otherwise terminate the process
+ * when an error was raised & caught.
+ *
+ */
+int x11_error_catcher( Display *disp, XErrorEvent *xe )
+{
+    (void)(disp);
+    (void)(xe);
+
+    printf("An error was caught!\n");
+
+    return 0;
+}
 
 
 
@@ -187,6 +210,10 @@ int main(int argc, char **argv)
         printf("Single run\n");
 
 
+    /**
+     * Setup our error-handler.
+     */
+    XSetErrorHandler( x11_error_catcher );
 
     /**
      * Initialize Lua.
