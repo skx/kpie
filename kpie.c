@@ -153,7 +153,7 @@ int main(int argc, char **argv)
             single = TRUE;
             break;
         case 'v':
-            printf("kpie - %.1f", VERSION);
+            printf("kpie - %s", VERSION);
 #ifdef LUA_VERSION
             printf(" (built against " LUA_VERSION ")");
 #endif
