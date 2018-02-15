@@ -93,6 +93,11 @@ char *g_config = NULL;
 int g_debug;
 
 
+/**
+ * A flag to keep track of whether an X11-error happened.
+ */
+int g_error = 0;
+
 
 /**
  * This is an error-handler which is invoked when any of the X11-based
@@ -110,6 +115,7 @@ int x11_error_catcher( Display *disp, XErrorEvent *xe )
 
     printf("An error was caught!\n");
 
+    g_error = 1;
     return 0;
 }
 
@@ -162,7 +168,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "window_id", lua_window_id);
     lua_register(g_L, "window_xid", lua_window_xid);
     lua_register(g_L, "window_pid", lua_window_pid);
-    lua_register(g_L, "window_role", lua_window_role);
+    lua_register(g_L, "window_role", lua_window_role_wrapper);
     lua_register(g_L, "window_title", lua_window_title);
     lua_register(g_L, "window_type", lua_window_type);
     lua_register(g_L, "workspace", lua_workspace);
@@ -783,13 +789,6 @@ int lua_window_pid(lua_State * L)
  */
 int lua_window_role(lua_State * L)
 {
-
-
-    /**
-     * Setup our error-handler.
-     */
-    XSetErrorHandler( x11_error_catcher );
-
     /**
      * Get the atom to get the property.
      */
@@ -797,7 +796,6 @@ int lua_window_role(lua_State * L)
     if ( a == None)
     {
         lua_pushstring(L, "");
-        XSetErrorHandler( NULL );
         return 1;
     }
 
@@ -823,13 +821,51 @@ int lua_window_role(lua_State * L)
          * Success.
          */
         lua_pushstring(L,((char*)property));
-        XSetErrorHandler( NULL );
         return 1;
     }
 
     lua_pushstring(L, "");
-    XSetErrorHandler( NULL );
     return 1;
+}
+
+
+/**
+ * A simple wrapper which takes care of error-handling
+ * around the `lua_window_role` function.
+ */
+int lua_window_role_wrapper(lua_State * L)
+{
+    /*
+     * Setup our error-handler.
+     */
+    XSetErrorHandler( x11_error_catcher );
+
+    /*
+     * There has been no error.
+     */
+    g_error = 0;
+
+    /*
+     * Call the function.
+     */
+    int ret = lua_window_role(L);
+
+    /*
+     * Reset the error-wrapper.
+     */
+    XSetErrorHandler( NULL );
+
+    /*
+     * If there was an error - then return nil.
+     */
+    if ( g_error != 0 ) {
+        lua_pushnil( L );
+        return 1;
+    }
+    else
+    {
+        return ret;
+    }
 }
 
 
