@@ -1,3 +1,12 @@
+kpie (0.8-1) unstable; urgency=low
+
+  * window_role() now catches errors if the X11 window goes away
+    while kpie is executing - and will return `nil` to the caller.
+  * Reverted the use of autoconf, since I find it hard and I didn't
+    receive confirmation from any user that it worked.
+
+ -- Steve Kemp <steve@steve.org.uk>  Thu, 15 Feb 2018 19:44:19 +0000
+
 kpie (0.7-1) unstable; urgency=low
 
   * Updated the return value of `window_class` for compatibility.
