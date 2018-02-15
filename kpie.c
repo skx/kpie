@@ -72,8 +72,8 @@ void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data);
 void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data)
 {
 
-    (void) (screen);
-    (void) (data);
+    (void)(screen);
+    (void)(data);
 
     /**
      * Update the global "current window" to point to the current
@@ -94,9 +94,9 @@ void on_window_opened(WnckScreen * screen, WnckWindow * window, gpointer data)
  */
 int main(int argc, char **argv)
 {
-   /**
-    * The Lua configuration file we parse/use.
-    */
+    /**
+     * The Lua configuration file we parse/use.
+     */
     gchar *config_file;
 
 
@@ -121,7 +121,8 @@ int main(int argc, char **argv)
      */
     while (1)
     {
-        static struct option long_options[] = {
+        static struct option long_options[] =
+        {
             {"debug", no_argument, 0, 'd'},
             {"single", no_argument, 0, 's'},
             {"config", required_argument, 0, 'c'},
@@ -145,13 +146,16 @@ int main(int argc, char **argv)
         case 'd':
             debug = TRUE;
             break;
+
         case 'c':
             g_free(config_file);
             config_file = g_strdup(optarg);
             break;
+
         case 's':
             single = TRUE;
             break;
+
         case 'v':
             printf("kpie - %s", VERSION);
 #ifdef LUA_VERSION
@@ -159,6 +163,7 @@ int main(int argc, char **argv)
 #endif
             printf("\n");
             return (0);
+
         case '?':
             /* getopt_long already printed an error message. */
             return (1);
@@ -170,6 +175,7 @@ int main(int argc, char **argv)
      * If a configuration file was specified use a different one.
      */
     int index;
+
     for (index = optind; index < argc; index++)
     {
         g_free(config_file);
@@ -233,8 +239,9 @@ int main(int argc, char **argv)
              * Get all windows.
              */
             GList *window_l;
+
             for (window_l = wnck_screen_get_windows(screen);
-                 window_l != NULL; window_l = window_l->next)
+                    window_l != NULL; window_l = window_l->next)
             {
                 /**
                  * Update the global pointer to the current window.
@@ -248,7 +255,8 @@ int main(int argc, char **argv)
             }
         }
 
-    } else
+    }
+    else
     {
         /**
          * Count the screens on the system.

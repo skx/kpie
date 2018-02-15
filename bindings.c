@@ -108,7 +108,7 @@ int g_error = 0;
  * when an error was raised & caught.
  *
  */
-int x11_error_catcher( Display *disp, XErrorEvent *xe )
+int x11_error_catcher(Display *disp, XErrorEvent *xe)
 {
     (void)(disp);
     (void)(xe);
@@ -183,6 +183,7 @@ void init_lua(int _debug, const char *config_file)
         lua_pushboolean(g_L, 1);
     else
         lua_pushboolean(g_L, 0);
+
     lua_setglobal(g_L, "DEBUG");
 
 
@@ -212,6 +213,7 @@ void invoke_lua()
      * See if the users lua-file is present, if not return.
      */
     struct stat sb;
+
     if (stat(g_config, &sb) < 0)
         return;
 
@@ -241,6 +243,7 @@ void close_lua()
 
     if (g_config != NULL)
         free(g_config);
+
     g_config = NULL;
 }
 
@@ -305,7 +308,8 @@ int lua_activate_workspace(lua_State * L)
     if (number < 1 || number > count)
     {
         g_warning("Workspace number out of bounds: %d", number);
-    } else
+    }
+    else
     {
         char *x = g_strdup_printf("activate workspace %d", number);
         debug(x);
@@ -321,6 +325,7 @@ int lua_activate_workspace(lua_State * L)
         else
             g_warning("Failed to get workspace %d", number);
     }
+
     return 0;
 }
 
@@ -345,10 +350,12 @@ int lua_exists(lua_State * L)
     const char *path = luaL_checkstring(L, 1);
 
     struct stat sb;
+
     if (stat(path, &sb) < 0)
         lua_pushboolean(L, 0);
     else
         lua_pushboolean(L, 1);
+
     return 1;
 }
 
@@ -389,6 +396,7 @@ int lua_is_focussed(lua_State * L)
         lua_pushboolean(L, 1);
     else
         lua_pushboolean(L, 0);
+
     return 1;
 }
 
@@ -401,6 +409,7 @@ int lua_is_fullscreen(lua_State * L)
         lua_pushboolean(L, 1);
     else
         lua_pushboolean(L, 0);
+
     return 1;
 }
 
@@ -414,6 +423,7 @@ int lua_is_maximized(lua_State * L)
         lua_pushboolean(L, 1);
     else
         lua_pushboolean(L, 0);
+
     return 1;
 }
 
@@ -427,6 +437,7 @@ int lua_is_minimized(lua_State * L)
         lua_pushboolean(L, 1);
     else
         lua_pushboolean(L, 0);
+
     return 1;
 }
 
@@ -513,8 +524,8 @@ int lua_pointer(lua_State *L)
     GdkScreen *screen = NULL;
 
     /* get default display and screen */
-    display = gdk_display_get_default ();
-    screen = gdk_display_get_default_screen (display);
+    display = gdk_display_get_default();
+    screen = gdk_display_get_default_screen(display);
 
     /**
      * Set the value?
@@ -524,12 +535,12 @@ int lua_pointer(lua_State *L)
         x = (int) luaL_checknumber(L, 1);
         y = (int) luaL_checknumber(L, 2);
 
-        gdk_display_warp_pointer (display, screen, x, y);
+        gdk_display_warp_pointer(display, screen, x, y);
     }
 
 
     /* get cursor position */
-    gdk_display_get_pointer (display, NULL, &x, &y, NULL);
+    gdk_display_get_pointer(display, NULL, &x, &y, NULL);
 
     lua_pushinteger(L, x);
     lua_pushinteger(L, y);
@@ -563,7 +574,8 @@ int lua_readdir(lua_State * L)
             lua_settable(L, -3);
 
             count += 1;
-        } else
+        }
+        else
         {
             closedir(dir);
             dir = 0;
@@ -739,6 +751,7 @@ int lua_window_class(lua_State * L)
 int lua_window_id(lua_State * L)
 {
     const char *id = wnck_window_get_session_id(g_window);
+
     if (id)
         lua_pushstring(L, wnck_window_get_session_id(g_window));
     else
@@ -746,6 +759,7 @@ int lua_window_id(lua_State * L)
         g_warning("Failed to find ID");
         lua_pushstring(L, "");
     }
+
     return 1;
 }
 
@@ -756,6 +770,7 @@ int lua_window_id(lua_State * L)
 int lua_window_xid(lua_State * L)
 {
     gulong pid = wnck_window_get_xid(g_window);
+
     if (pid)
         lua_pushinteger(L, pid);
     else
@@ -763,6 +778,7 @@ int lua_window_xid(lua_State * L)
         g_warning("Failed to find XID");
         lua_pushinteger(L, 0);
     }
+
     return 1;
 }
 
@@ -773,6 +789,7 @@ int lua_window_xid(lua_State * L)
 int lua_window_pid(lua_State * L)
 {
     int pid = wnck_window_get_pid(g_window);
+
     if (pid)
         lua_pushinteger(L, pid);
     else
@@ -780,6 +797,7 @@ int lua_window_pid(lua_State * L)
         g_warning("Failed to find PID");
         lua_pushinteger(L, 0);
     }
+
     return 1;
 }
 
@@ -792,8 +810,9 @@ int lua_window_role(lua_State * L)
     /**
      * Get the atom to get the property.
      */
-    Atom a = XInternAtom (gdk_x11_get_default_xdisplay(), "WM_WINDOW_ROLE", FALSE);
-    if ( a == None)
+    Atom a = XInternAtom(gdk_x11_get_default_xdisplay(), "WM_WINDOW_ROLE", FALSE);
+
+    if (a == None)
     {
         lua_pushstring(L, "");
         return 1;
@@ -808,19 +827,19 @@ int lua_window_role(lua_State * L)
     /**
      * Now get the property.
      */
-    XGetWindowProperty (gdk_x11_get_default_xdisplay (),
-                        wnck_window_get_xid(g_window), a,
-                        0, G_MAXLONG,
-                        False, AnyPropertyType, &type,
-                        &format, &nitems,
-                        &bytes_after, &property);
+    XGetWindowProperty(gdk_x11_get_default_xdisplay(),
+                       wnck_window_get_xid(g_window), a,
+                       0, G_MAXLONG,
+                       False, AnyPropertyType, &type,
+                       &format, &nitems,
+                       &bytes_after, &property);
 
     if (type == XA_STRING)
     {
         /**
          * Success.
          */
-        lua_pushstring(L,((char*)property));
+        lua_pushstring(L, ((char*)property));
         return 1;
     }
 
@@ -838,7 +857,7 @@ int lua_window_role_wrapper(lua_State * L)
     /*
      * Setup our error-handler.
      */
-    XSetErrorHandler( x11_error_catcher );
+    XSetErrorHandler(x11_error_catcher);
 
     /*
      * There has been no error.
@@ -853,13 +872,14 @@ int lua_window_role_wrapper(lua_State * L)
     /*
      * Reset the error-wrapper.
      */
-    XSetErrorHandler( NULL );
+    XSetErrorHandler(NULL);
 
     /*
      * If there was an error - then return nil.
      */
-    if ( g_error != 0 ) {
-        lua_pushnil( L );
+    if (g_error != 0)
+    {
+        lua_pushnil(L);
         return 1;
     }
     else
@@ -891,31 +911,40 @@ int lua_window_type(lua_State * L)
     case WNCK_WINDOW_NORMAL:
         lua_pushstring(L, "WINDOW_NORMAL");
         break;
+
     case WNCK_WINDOW_DESKTOP:
         lua_pushstring(L, "WINDOW_DESKTOP");
         break;
+
     case WNCK_WINDOW_DOCK:
         lua_pushstring(L, "WINDOW_DOCK");
         break;
+
     case WNCK_WINDOW_DIALOG:
         lua_pushstring(L, "WINDOW_DIALOG");
         break;
+
     case WNCK_WINDOW_TOOLBAR:
         lua_pushstring(L, "WINDOW_TOOLBAR");
         break;
+
     case WNCK_WINDOW_MENU:
         lua_pushstring(L, "WINDOW_MENU");
         break;
+
     case WNCK_WINDOW_UTILITY:
         lua_pushstring(L, "WINDOW_UTILITY");
         break;
+
     case WNCK_WINDOW_SPLASHSCREEN:
         lua_pushstring(L, "WINDOW_SPLASHSCREEN");
         break;
+
     default:
         g_warning("Unknown window-type");
         return 0;
     };
+
     return 1;
 }
 
@@ -945,7 +974,8 @@ int lua_workspace(lua_State * L)
         if (number < 1 || number > count)
         {
             g_warning("Workspace number out of bounds: %d", number);
-        } else
+        }
+        else
         {
 
             char *x = g_strdup_printf("move window to workspace %d", number);
@@ -962,6 +992,7 @@ int lua_workspace(lua_State * L)
             else
                 g_warning("Workspace number %d does not exist!", number);
         }
+
         return 0;
     }
 
@@ -969,10 +1000,12 @@ int lua_workspace(lua_State * L)
      * Get the value.
      */
     WnckWorkspace *w = wnck_window_get_workspace(g_window);
+
     if (w == NULL)
         lua_pushinteger(L, -1);
     else
         lua_pushinteger(L, wnck_workspace_get_number(w) + 1);
+
     return 1;
 }
 
