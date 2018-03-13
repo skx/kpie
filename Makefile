@@ -2,7 +2,7 @@
 #
 #  Our version number
 #
-VERSION=0.8
+VERSION=0.9
 DIST_PREFIX=/tmp
 BASE=kpie
 
@@ -41,7 +41,7 @@ LINKER=$(CC) -o
 #
 CFLAGS=-DVERSION=\"$(VERSION)\"
 #CFLAGS+=$(shell dpkg-buildflags --get CFLAGS)
-CFLAGS+=-pedantic -std=c99 -Wall -Wextra
+CFLAGS+=-pedantic -std=c99 -Wall -Wextra -fPIC
 CFLAGS+=$(shell pkg-config --cflags libwnck-1.0) $(shell pkg-config --cflags ${LVER})
 
 
