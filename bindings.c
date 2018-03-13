@@ -140,6 +140,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "activate_workspace", lua_activate_workspace);
     lua_register(g_L, "below", lua_below);
     lua_register(g_L, "exists", lua_exists);
+    lua_register(g_L, "decoration", lua_window_decoration);
     lua_register(g_L, "focus", lua_focus);
     lua_register(g_L, "fullscreen", lua_fullscreen);
     lua_register(g_L, "is_focussed", lua_is_focussed);
@@ -744,6 +745,45 @@ int lua_window_class(lua_State * L)
     return 1;
 }
 
+
+/**
+ * Set the decorations for the current window.
+ */
+int lua_window_decoration(lua_State * L)
+{
+#define PROP_MOTIF_WM_HINTS_ELEMENTS 5
+#define MWM_HINTS_DECORATIONS (1L << 1)
+
+    int enable = lua_toboolean(L, 1);
+
+    struct
+    {
+        unsigned long flags;
+        unsigned long functions;
+        unsigned long decorations;
+        long inputMode;
+        unsigned long status;
+    } hints = {0,};
+
+    hints.flags = MWM_HINTS_DECORATIONS;
+    hints.decorations = enable ? 1 : 0;
+
+    Atom a = XInternAtom(gdk_x11_get_default_xdisplay(),
+                         "_MOTIF_WM_HINTS", FALSE);
+
+    if (a == None)
+    {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    XChangeProperty(gdk_x11_get_default_xdisplay(),
+                    wnck_window_get_xid(g_window),
+                    a, a, 32, PropModeReplace,
+                    (unsigned char *)&hints, PROP_MOTIF_WM_HINTS_ELEMENTS);
+
+    return 0;
+}
 
 /**
  * Return the ID of this window.
