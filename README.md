@@ -167,9 +167,10 @@ The following primitives are available:
        * The return value may be -1 if the window is pinned, or invisible.
     * `workspaces` - Get/set the number of workspaces/virtual-desktops.
 * Misc
-    * `kill` - Close the window, forcibly.
+    * `decoration` - Set/Unset the decorations for the window.
     * `exists` - Does the given file/directory exist?
        * See [samples/includes.lua](samples/includes.lua)
+    * `kill` - Close the window, forcibly.
     * `pointer` - Get/Set the position of the mouse pointer.
     * `readdir` - Read the contents of a directory.
        * See [samples/includes.lua](samples/includes.lua)
