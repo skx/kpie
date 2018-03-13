@@ -1,3 +1,10 @@
+kpie (0.9-1) unstable; urgency=low
+
+  * A new function `decorate(bool)` was added to allow setting/unsetting
+    window decorations.
+
+ -- Steve Kemp <steve@steve.org.uk>  Tue, 13 Mar 2018 18:11:11 +0000
+
 kpie (0.8-1) unstable; urgency=low
 
   * window_role() now catches errors if the X11 window goes away
