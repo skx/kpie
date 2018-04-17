@@ -137,6 +137,7 @@ void init_lua(int _debug, const char *config_file)
      * Register our primitives to the Lua environment.
      */
     lua_register(g_L, "above", lua_above);
+    lua_register(g_L, "activate", lua_activate);
     lua_register(g_L, "activate_workspace", lua_activate_workspace);
     lua_register(g_L, "below", lua_below);
     lua_register(g_L, "exists", lua_exists);
@@ -289,6 +290,18 @@ int lua_above(lua_State * L)
     UNUSED(L);
     debug("above window");
     wnck_window_make_above(g_window);
+    return 0;
+}
+
+
+/**
+ * Set the window to be in the foreground
+ */
+int lua_activate(lua_State * L)
+{
+    UNUSED(L);
+    debug("above window");
+    wnck_window_activate(g_window, get_timestamp());
     return 0;
 }
 

@@ -68,6 +68,7 @@ guint32 get_timestamp(void);
 
 
 int lua_above(lua_State * L);
+int lua_activate(lua_State * L);
 int lua_activate_workspace(lua_State * L);
 int lua_below(lua_State * L);
 int lua_exists(lua_State * L);

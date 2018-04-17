@@ -144,6 +144,7 @@ The following primitives are available:
     * `screen_height` - Get the size of the screen.
     * `screen_width` - Get the size of the screen.
 * Depth
+    * `activate` - Make the window appear in the foreground and give focus.
     * `above` - Make the window "always on top".
     * `below` - Remove the "always on top" flag.
 * Max/Min
