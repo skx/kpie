@@ -2,7 +2,7 @@
 #
 #  Our version number
 #
-VERSION=0.9
+VERSION=1.0
 DIST_PREFIX=/tmp
 BASE=kpie
 

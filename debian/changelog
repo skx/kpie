@@ -1,3 +1,9 @@
+kpie (1.0-1) unstable; urgency=low
+
+  * Bump to release 1.0 because it feels like time.
+
+ -- Steve Kemp <steve@steve.org.uk>  Tue, 17 Apr 2018 07:35:07 +0000
+
 kpie (0.10-1) unstable; urgency=low
 
   * A new function `activate()` was added to allow bringing a window to
