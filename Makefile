@@ -54,7 +54,7 @@ CFLAGS+=$(shell pkg-config --cflags libwnck-1.0) $(shell pkg-config --cflags ${L
 LDFLAGS=
 LDFLAGS+=$(shell dpkg-buildflags --get LDFLAGS)
 LDFLAGS+=$(shell pkg-config --libs libwnck-1.0) $(shell pkg-config --libs ${LVER})
-LDFLAGS+=-lX11
+LDFLAGS+=-lX11 -lXrandr
 
 #
 # Setup our sources.
