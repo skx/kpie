@@ -1,3 +1,9 @@
+kpie (1.1-1) unstable; urgency=low
+
+  * Attempt to cope with differently sized-monitors.
+
+ -- Steve Kemp <steve@steve.org.uk>  Tue, 18 Dec 2018 10:33:01 +0000
+
 kpie (1.0-1) unstable; urgency=low
 
   * Bump to release 1.0 because it feels like time.
