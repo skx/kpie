@@ -27,7 +27,7 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
-
+#include <X11/extensions/Xrandr.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 #include <libwnck/libwnck.h>
@@ -609,8 +609,21 @@ int lua_readdir(lua_State * L)
  */
 int lua_screen_height(lua_State * L)
 {
-    WnckScreen *screen = wnck_window_get_screen(g_window);
-    lua_pushinteger(L, wnck_screen_get_height(screen));
+    Display *d = gdk_x11_get_default_xdisplay();
+    Window   w = wnck_window_get_xid(g_window);
+    XRRScreenResources *xrrr = XRRGetScreenResources(d, w);
+    XRRCrtcInfo *xrrci;
+    int height = 0;
+    int ncrtc = xrrr->ncrtc;
+    for (int i = 0; i < ncrtc; ++i) {
+        xrrci = XRRGetCrtcInfo(d, xrrr, xrrr->crtcs[i]);
+        if ( xrrci->height > 0 )
+            height = xrrci->height;
+        XRRFreeCrtcInfo(xrrci);
+    }
+    XRRFreeScreenResources(xrrr);
+
+    lua_pushinteger(L, height);
     return 1;
 }
 
@@ -620,8 +633,21 @@ int lua_screen_height(lua_State * L)
  */
 int lua_screen_width(lua_State * L)
 {
-    WnckScreen *screen = wnck_window_get_screen(g_window);
-    lua_pushinteger(L, wnck_screen_get_width(screen));
+    Display *d = gdk_x11_get_default_xdisplay();
+    Window   w = wnck_window_get_xid(g_window);
+    XRRScreenResources *xrrr = XRRGetScreenResources(d, w);
+    XRRCrtcInfo *xrrci;
+    int width = 0;
+    int ncrtc = xrrr->ncrtc;
+    for (int i = 0; i < ncrtc; ++i) {
+        xrrci = XRRGetCrtcInfo(d, xrrr, xrrr->crtcs[i]);
+        if ( xrrci->width > 0 )
+            width = xrrci->width;
+        XRRFreeCrtcInfo(xrrci);
+    }
+    XRRFreeScreenResources(xrrr);
+
+    lua_pushinteger(L, width);
     return 1;
 }
 
