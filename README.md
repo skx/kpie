@@ -147,6 +147,8 @@ The following primitives are available:
     * `activate` - Make the window appear in the foreground and give focus.
     * `above` - Make the window "always on top".
     * `below` - Remove the "always on top" flag.
+    * `bottom` - Make the window "always below".
+    * `unbottom` - Remove the "always below" flag.
 * Max/Min
     * `maximize` - Maximize the window.
     * `maximize_horizontally` - Maximize horizontally.
