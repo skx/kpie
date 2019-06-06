@@ -140,6 +140,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "activate", lua_activate);
     lua_register(g_L, "activate_workspace", lua_activate_workspace);
     lua_register(g_L, "below", lua_below);
+    lua_register(g_L, "bottom", lua_bottom);
     lua_register(g_L, "exists", lua_exists);
     lua_register(g_L, "decoration", lua_window_decoration);
     lua_register(g_L, "focus", lua_focus);
@@ -160,6 +161,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "screen_width", lua_screen_width);
     lua_register(g_L, "shade", lua_shade);
     lua_register(g_L, "size", lua_size);
+    lua_register(g_L, "unbottom", lua_unbottom);
     lua_register(g_L, "unfullscreen", lua_unfullscreen);
     lua_register(g_L, "unmaximize", lua_unmaximize);
     lua_register(g_L, "unminimize", lua_unminimize);
@@ -352,6 +354,18 @@ int lua_below(lua_State * L)
     UNUSED(L);
     debug("below window");
     wnck_window_unmake_above(g_window);
+    return 0;
+}
+
+
+/**
+ * Set the window to be below all windows.
+ */
+int lua_bottom(lua_State * L)
+{
+    UNUSED(L);
+    debug("bottom window");
+    wnck_window_make_below(g_window);
     return 0;
 }
 
@@ -699,6 +713,18 @@ int lua_size(lua_State * L)
     lua_pushinteger(L, width);
     lua_pushinteger(L, height);
     return 2;
+}
+
+
+/**
+ * Unset the window from being below all windows.
+ */
+int lua_unbottom(lua_State * L)
+{
+    UNUSED(L);
+    debug("unset below window");
+    wnck_window_unmake_below(g_window);
+    return 0;
 }
 
 
