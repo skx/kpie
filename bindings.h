@@ -84,6 +84,7 @@ int lua_maximize(lua_State * L);
 int lua_maximize_horizontally(lua_State * L);
 int lua_maximize_vertically(lua_State * L);
 int lua_minimize(lua_State * L);
+int lua_nofocus(lua_State * L);
 int lua_pin(lua_State * L);
 int lua_pointer(lua_State *L);
 int lua_readdir(lua_State * L);

@@ -154,6 +154,7 @@ void init_lua(int _debug, const char *config_file)
     lua_register(g_L, "maximize_horizontally", lua_maximize_horizontally);
     lua_register(g_L, "maximize_vertically", lua_maximize_vertically);
     lua_register(g_L, "minimize", lua_minimize);
+    lua_register(g_L, "nofocus", lua_nofocus);
     lua_register(g_L, "pin", lua_pin);
     lua_register(g_L, "pointer", lua_pointer);
     lua_register(g_L, "readdir", lua_readdir);
@@ -523,6 +524,21 @@ int lua_minimize(lua_State * L)
     UNUSED(L);
     debug("minimizing window");
     wnck_window_minimize(g_window);
+    return 0;
+}
+
+
+/**
+ * Prevent focus for the current window
+ */
+int lua_nofocus(lua_State * L)
+{
+    /* Variable setup */
+    GdkDisplay *display = NULL;
+    Window   w = wnck_window_get_xid(g_window);
+    display = gdk_display_get_default();
+
+    XSetWMHints(display, w, input = False);
     return 0;
 }
 
