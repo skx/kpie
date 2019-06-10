@@ -533,12 +533,19 @@ int lua_minimize(lua_State * L)
  */
 int lua_nofocus(lua_State * L)
 {
+#define	InputHint	(1L << 0)
+    XWMHints* inputTOG = XAllocWMHints();
+    if (!inputTOG) {
+    fprintf(stderr, "XAllocWMHints - out of memory\n");
+    exit(1);
+    }
     /* Variable setup */
-    GdkDisplay *display = NULL;
-    Window   w = wnck_window_get_xid(g_window);
-    display = gdk_display_get_default();
-
-    XSetWMHints(display, w, input = False);
+    display = gdk_x11_get_default_xdisplay();
+    w = wnck_window_get_xid(g_window);
+    inputTOG->flags = InputHint;
+    inputTOG->input = False;
+    XSetWMHints(d, w, inputTOG);
+    XFree(inputTOG);
     return 0;
 }
 
