@@ -9,7 +9,7 @@ BASE=kpie
 #
 # The version of Lua we build against.
 #
-LUA_VERSION=52
+LUA_VERSION=5.1
 
 #
 # Magic to guess the Lua library versions.
