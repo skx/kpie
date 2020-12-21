@@ -1,8 +1,3 @@
-
-* Git Repository:
-    * http://github.com/skx/kpie
-
-
 KPie
 ----
 
@@ -18,6 +13,9 @@ Options are currently limited to:
     --debug    - Show debugging information.
     --single   - Process each window once, then exit.
     --version  - Show the version number.
+
+
+**NOTE**: This application is essentially obsolete as of 2020, as GNU/Linux desktops are running Wayland instead of X.org.
 
 
 Overview
